@@ -65,7 +65,7 @@ fun main() {
   ).save("Example1_18.png")
 }
 
-fun rates(t: Double, f: MultiArray<Double, D1>): MultiArray<Double, D1> {
+private fun rates(t: Double, f: MultiArray<Double, D1>): MultiArray<Double, D1> {
   val m = 1.0
   val z = 0.03
   val wn = 1.0
