@@ -84,7 +84,7 @@ fun rk(
   rk: Int
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
   //Determine which of the four Runge-Kutta methods is to be used:
-  val n_stages = rk
+  val nStages = rk
   val (a, b, c) = when(rk) {
     1 -> Triple(rk1a, rk1b, rk1c)
     2 -> Triple(rk2a, rk2b, rk2c)
@@ -99,13 +99,13 @@ fun rk(
   var tOut = listOf(t)
   var yOut = listOf(y)
   var h    = h0
-  val f    = mk.zeros<Double>(n_stages, y0.size)
+  val f    = mk.zeros<Double>(nStages, y0.size)
 
   while (t < tf) {
     val ti = t
     val yi = y
     //Evaluate the time derivative(s) at the 'n_stages' points within the current interval:
-    for (i in 0..<n_stages) {
+    for (i in 0..<nStages) {
       val tInner = ti + a[i] * h
       var yInner = yi
       for (j in 0..<i) {

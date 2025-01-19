@@ -35,7 +35,7 @@ fun main() {
   val (t2, f2) = heun(::rates, tspan, f0, h)
 
   // Plot the results
-  plotVectors(Triple(t1.toList(), f1.map{ it[0] }, "h = 1.0"), Triple(t2.toList(), f2.map{ it[0] }, "h = 0.1"))
+  plotScalar(Triple(t1.toList(), f1.map{ it[0] }, "h = 1.0"), Triple(t2.toList(), f2.map{ it[0] }, "h = 0.1"))
     .save("Example1_19.png")
 }
 
