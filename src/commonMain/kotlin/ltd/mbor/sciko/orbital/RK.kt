@@ -76,6 +76,13 @@ val rk4b = mk.ndarray(mk[
 ])
 val rk4c = mk.ndarray(mk[1.0/6, 1.0/3, 1.0/3, 1.0/6])
 
+fun rk4(
+  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
+  tspan: Pair<Double, Double>,
+  y0: MultiArray<Double, D1>,
+  h0: Double,
+) = rk(odeFunction, tspan, y0, h0, 4)
+
 fun rk(
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
   tspan: Pair<Double, Double>,
