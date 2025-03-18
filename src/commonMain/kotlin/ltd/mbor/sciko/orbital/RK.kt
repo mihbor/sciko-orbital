@@ -77,7 +77,7 @@ val rk4c = mk.ndarray(mk[1.0/6, 1.0/3, 1.0/3, 1.0/6])
 
 fun rk4(
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
-  tspan: Pair<Double, Double>,
+  tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   h0: Double,
   outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
@@ -85,7 +85,7 @@ fun rk4(
 
 fun rk(
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
-  tspan: Pair<Double, Double>,
+  tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   h0: Double,
   rk: Int,
@@ -100,8 +100,8 @@ fun rk(
     4 -> Triple(rk4a, rk4b, rk4c)
     else -> error("The parameter rk  must have the value 1, 2, 3 or 4.")
   }
-  val t0   = tspan.first
-  val tf   = tspan.second
+  val t0   = tspan.start
+  val tf   = tspan.endInclusive
   var t    = t0
   var y    = y0
   var tOut = listOf(t)

@@ -26,7 +26,7 @@ fun main() {
 
   val t0 = 0.0
   val tf = 110.0
-  val tspan = t0 to tf
+  val tspan = t0..tf
 
   // Solve using RK1 through RK4, using the same and a larger time step for each method
   var rk = 1
