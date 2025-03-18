@@ -44,8 +44,7 @@ import kotlin.math.min
   t_inner       - time within a given time step
   y_inner       - values of y within a given time step
 
-  User M-function required: ode_function
-  %}
+  User function required: ode_function
  */
 
 val rk1a = mk.ndarray(mk[0.0])
@@ -81,14 +80,16 @@ fun rk4(
   tspan: Pair<Double, Double>,
   y0: MultiArray<Double, D1>,
   h0: Double,
-) = rk(odeFunction, tspan, y0, h0, 4)
+  outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
+) = rk(odeFunction, tspan, y0, h0, 4, outerFunction)
 
 fun rk(
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
   tspan: Pair<Double, Double>,
   y0: MultiArray<Double, D1>,
   h0: Double,
-  rk: Int
+  rk: Int,
+  outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
   //Determine which of the four Runge-Kutta methods is to be used:
   val nStages = rk
@@ -110,7 +111,7 @@ fun rk(
 
   while (t < tf) {
     val ti = t
-    val yi = y
+    val yi = outerFunction(t, y)
     //Evaluate the time derivative(s) at the 'n_stages' points within the current interval:
     for (i in 0..<nStages) {
       val tInner = ti + a[i] * h
