@@ -2,22 +2,22 @@ package ltd.mbor.sciko.orbital
 
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
-import org.jetbrains.kotlinx.multik.ndarray.data.get
 import org.jetbrains.kotlinx.multik.ndarray.operations.*
 import kotlin.math.abs
 import kotlin.math.min
 
 fun heun(
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
-  tspan: MultiArray<Double, D1>,
+  tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
-  h: Double
+  h: Double,
+  outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
   val tol = 1e-6
   val itermax = 100
 
-  var t0 = tspan[0]
-  val tf = tspan[1]
+  val t0 = tspan.start
+  val tf = tspan.endInclusive
   var t = t0
   var y = y0
   var tout = listOf(t)
@@ -26,7 +26,7 @@ fun heun(
   while (t < tf) {
     val hStep = min(h, tf - t)
     val t1 = t
-    val y1 = y
+    val y1 = outerFunction(t, y)
     val f1 = odeFunction(t1, y1)
     var y2 = y1 + f1 * hStep
     val t2 = t1 + hStep

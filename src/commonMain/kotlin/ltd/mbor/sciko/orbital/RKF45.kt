@@ -28,12 +28,14 @@ val c5 = mk.ndarray(mk[16.0 / 135, 0.0, 6656.0 / 12825, 28561.0 / 56430, -9.0 / 
 
 fun rkf45(
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
-  tspan: Pair<Double, Double>,
+  tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
-  tolerance: Double = 1e-8
+  tolerance: Double = 1e-8,
+  outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
 
-  val (t0, tf) = tspan
+  val t0 = tspan.start
+  val tf = tspan.endInclusive
   var t = t0
   var y = y0
   val tOut = mutableListOf(t)
@@ -43,11 +45,12 @@ fun rkf45(
   while (t < tf) {
     val hmin = 16 * Double.MIN_VALUE
     val ti = t
+    val yi = outerFunction(t, y)
     val f = mk.zeros<Double>(6, y0.size)
 
     for (i in 0..<6) {
       val tInner = ti + a[i] * h
-      var yInner = y
+      var yInner = yi
       for (j in 0..<i) {
         yInner += h * b[i, j] * f[j]
       }

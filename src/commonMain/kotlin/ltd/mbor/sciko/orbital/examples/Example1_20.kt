@@ -20,7 +20,7 @@ fun main() {
   val t0 = 0.0
   val tf = 70 * minutes
 
-  val (t, f) = rkf45(::rates, Pair(t0, tf), y0)
+  val (t, f) = rkf45(::rates, t0..tf, y0)
   plotGrid(
     listOf(
       plotScalar(Triple(t.map{it/minutes}, f.map { it[0] }, "position, km")),

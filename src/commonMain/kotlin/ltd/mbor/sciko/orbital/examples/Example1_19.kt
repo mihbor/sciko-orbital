@@ -19,7 +19,7 @@ fun main() {
   // Time range
   val t0 = 0.0
   val tf = 110.0
-  val tspan = mk.ndarray(mk[t0, tf])
+  val tspan = t0..tf
 
   // Initial conditions
   val x0 = 0.0
