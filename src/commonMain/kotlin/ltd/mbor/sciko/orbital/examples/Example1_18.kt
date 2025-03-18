@@ -13,12 +13,6 @@ import kotlin.math.sin
 
 fun main() {
   mk.setEngine(KEEngineType)
-  // Input data
-  val m = 1.0
-  val z = 0.03
-  val wn = 1.0
-  val Fo = 1.0
-  val w = 0.4 * wn
 
   val x0 = 0.0
   val xDot0 = 0.0

@@ -2,6 +2,7 @@ package ltd.mbor.sciko.orbital.examples
 
 import ltd.mbor.sciko.orbital.heun
 import org.jetbrains.kotlinx.kandy.letsplot.export.save
+import org.jetbrains.kotlinx.multik.api.KEEngineType
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
@@ -9,12 +10,7 @@ import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
 
 fun main() {
-  // System properties
-  val m = 1.0
-  val z = 0.03
-  val wn = 1.0
-  val Fo = 1.0
-  val w = 0.4 * wn
+  mk.setEngine(KEEngineType)
 
   // Time range
   val t0 = 0.0
