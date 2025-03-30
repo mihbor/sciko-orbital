@@ -1,4 +1,4 @@
-import ltd.mbor.sciko.orbital.norm
+import ltd.mbor.sciko.linalg.norm
 import ltd.mbor.sciko.orbital.rkf45
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
@@ -22,7 +22,7 @@ const val J2 = 1082.63e-6
 
 fun aJ2(mu: Double, r: MultiArray<Double, D1>): MultiArray<Double, D1> {
   val (x, y, z) = listOf(r[0], r[1], r[2])
-  return -3.0/2*J2*mu*R.pow(2)/r.norm().pow(4)*mk.ndarray(mk[
+  return -3.0/2*J2*mu*R.pow(2)/r. norm().pow(4)*mk.ndarray(mk[
     (1.0 - 5*(z/r.norm()).pow(2))*x/r.norm(),
     (1.0 - 5*(z/r.norm()).pow(2))*y/r.norm(),
     (3.0 - 5*(z/r.norm()).pow(2))*z/r.norm()

@@ -18,7 +18,7 @@ kotlin {
                 api("org.jetbrains.kotlinx:multik-core:0.2.3")
                 implementation("org.jetbrains.kotlinx:multik-default:0.2.3")
                 implementation("org.jetbrains.kotlinx:kandy-lets-plot:0.8.0")
-                implementation("com.github.mihbor.sciko-linalg:sciko-linalg:main")
+                implementation("com.github.mihbor:sciko-linalg:main-SNAPSHOT")
             }
         }
         val commonTest by getting {

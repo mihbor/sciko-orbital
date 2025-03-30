@@ -14,8 +14,8 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
 
-val a = mk.ndarray(mk[0.0, 1.0 / 4, 3.0 / 8, 12.0 / 13, 1.0, 1.0 / 2])
-val b = mk.ndarray(mk[
+private val a = mk.ndarray(mk[0.0, 1.0 / 4, 3.0 / 8, 12.0 / 13, 1.0, 1.0 / 2])
+private val b = mk.ndarray(mk[
   mk[          0.0,            0.0,            0.0,           0.0,        0.0],
   mk[      1.0 / 4,            0.0,            0.0,           0.0,        0.0],
   mk[     3.0 / 32,       9.0 / 32,            0.0,           0.0,        0.0],
@@ -23,8 +23,8 @@ val b = mk.ndarray(mk[
   mk[  439.0 / 216,           -8.0,   3680.0 / 513, -845.0 / 4104,        0.0],
   mk[    -8.0 / 27,            2.0, -3544.0 / 2565, 1859.0 / 4104, -11.0 / 40]
 ])
-val c4 = mk.ndarray(mk[25.0 / 216, 0.0,  1408.0 / 2565,   2197.0 / 4104,  -1.0 / 5,      0.0])
-val c5 = mk.ndarray(mk[16.0 / 135, 0.0, 6656.0 / 12825, 28561.0 / 56430, -9.0 / 50, 2.0 / 55])
+private val c4 = mk.ndarray(mk[25.0 / 216, 0.0,  1408.0 / 2565,   2197.0 / 4104,  -1.0 / 5,      0.0])
+private val c5 = mk.ndarray(mk[16.0 / 135, 0.0, 6656.0 / 12825, 28561.0 / 56430, -9.0 / 50, 2.0 / 55])
 
 fun rkf45(
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
