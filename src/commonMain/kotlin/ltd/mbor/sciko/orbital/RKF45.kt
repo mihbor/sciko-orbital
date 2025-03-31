@@ -27,11 +27,11 @@ private val c4 = mk.ndarray(mk[25.0 / 216, 0.0,  1408.0 / 2565,   2197.0 / 4104,
 private val c5 = mk.ndarray(mk[16.0 / 135, 0.0, 6656.0 / 12825, 28561.0 / 56430, -9.0 / 50, 2.0 / 55])
 
 fun rkf45(
-  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
   tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   tolerance: Double = 1e-8,
   outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
+  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
 
   val t0 = tspan.start

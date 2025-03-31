@@ -24,11 +24,11 @@ fun main() {
 
   // Calculate and plot the solution for h = 1.0
   var h = 1.0
-  val (t1, f1) = heun(::rates, tspan, f0, h)
+  val (t1, f1) = heun(tspan, f0, h, odeFunction = ::rates)
 
   // Calculate and plot the solution for h = 0.1
   h = 0.1
-  val (t2, f2) = heun(::rates, tspan, f0, h)
+  val (t2, f2) = heun(tspan, f0, h, odeFunction = ::rates)
 
   // Plot the results
   plotScalar(Triple(t1.toList(), f1.map{ it[0] }, "h = 1.0"), Triple(t2.toList(), f2.map{ it[0] }, "h = 0.1"))

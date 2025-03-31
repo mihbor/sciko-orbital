@@ -35,9 +35,8 @@ private val r0 = mk.ndarray(mk[-6685.20926,601.51244,3346.06634])
 private val v0 = mk.ndarray(mk[-1.74294,-6.70242,-2.27739])
 
 fun main() {
-
   val y0 = r0 cat v0
-  val (t, y) = rkf45({ t, y -> rates(t, y, aJ2(mu, y.slice(0..2))) }, t0..tf, y0)
+  val (t, y) = rkf45(t0..tf, y0) { t, y -> rates(t, y, aJ2(mu, y.slice(0..2))) }
 
   output(t, y)
 }

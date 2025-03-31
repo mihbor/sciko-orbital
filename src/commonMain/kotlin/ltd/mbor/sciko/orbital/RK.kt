@@ -76,20 +76,20 @@ val rk4b = mk.ndarray(mk[
 val rk4c = mk.ndarray(mk[1.0/6, 1.0/3, 1.0/3, 1.0/6])
 
 fun rk4(
-  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
   tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   h0: Double,
   outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
-) = rk(odeFunction, tspan, y0, h0, 4, outerFunction)
+  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
+) = rk(tspan, y0, h0, 4, outerFunction, odeFunction)
 
 fun rk(
-  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
   tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   h0: Double,
   rk: Int,
   outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
+  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
   //Determine which of the four Runge-Kutta methods is to be used:
   val nStages = rk

@@ -7,11 +7,11 @@ import kotlin.math.abs
 import kotlin.math.min
 
 fun heun(
-  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
   tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   h: Double,
   outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
+  odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
   val tol = 1e-6
   val itermax = 100

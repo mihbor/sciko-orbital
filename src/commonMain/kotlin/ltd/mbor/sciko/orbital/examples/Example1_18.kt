@@ -25,27 +25,27 @@ fun main() {
   // Solve using RK1 through RK4, using the same and a larger time step for each method
   var rk = 1
   var h = 0.01
-  var (t1, f1) = rk(::rates, tspan, f0, h, rk)
+  var (t1, f1) = rk(tspan, f0, h, rk, odeFunction = ::rates)
   h = 0.1
-  var (t11, f11) = rk(::rates, tspan, f0, h, rk)
+  var (t11, f11) = rk(tspan, f0, h, rk, odeFunction = ::rates)
 
   rk = 2
   h = 0.1
-  var (t2, f2) = rk(::rates, tspan, f0, h, rk)
+  var (t2, f2) = rk(tspan, f0, h, rk, odeFunction = ::rates)
   h = 0.5
-  var (t21, f21) = rk(::rates, tspan, f0, h, rk)
+  var (t21, f21) = rk(tspan, f0, h, rk, odeFunction = ::rates)
 
   rk = 3
   h = 0.5
-  var (t3, f3) = rk(::rates, tspan, f0, h, rk)
+  var (t3, f3) = rk(tspan, f0, h, rk, odeFunction = ::rates)
   h = 1.0
-  var (t31, f31) = rk(::rates, tspan, f0, h, rk)
+  var (t31, f31) = rk(tspan, f0, h, rk, odeFunction = ::rates)
 
   rk = 4
   h = 1.0
-  var (t4, f4) = rk(::rates, tspan, f0, h, rk)
+  var (t4, f4) = rk(tspan, f0, h, rk, odeFunction = ::rates)
   h = 2.0
-  var (t41, f41) = rk(::rates, tspan, f0, h, rk)
+  var (t41, f41) = rk(tspan, f0, h, rk, odeFunction = ::rates)
 
   plotGrid(
     listOf(
