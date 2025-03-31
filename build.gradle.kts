@@ -24,6 +24,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("com.ionspin.kotlin:bignum:0.3.10")
             }
         }
     }
