@@ -19,11 +19,11 @@ fun main() {
   output(m1, m2, r12, x)
 }
 
-fun f(z: Double): Double {
+private fun f(z: Double): Double {
   return (1 - p) * (z + p) / abs(z + p).pow(3) + p * (z + p - 1) / abs(z + p - 1).pow(3) - z
 }
 
-fun output(m1: Double, m2: Double, r12: Double, x: List<Double>) {
+private fun output(m1: Double, m2: Double, r12: Double, x: List<Double>) {
   println("\n\n---------------------------------------------\n")
   println("\n For\n")
   println("\n   m1 = $m1 kg")
