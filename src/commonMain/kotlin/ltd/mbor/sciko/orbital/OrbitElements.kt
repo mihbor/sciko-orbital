@@ -111,3 +111,5 @@ fun OrbitElementsH.toStateVectors(μ: Double): Pair<MultiArray<Double, D1>, Mult
   val v = QpX dot vp
   return r.transpose() to v.transpose()
 }
+
+fun OrbitElementsA.toStateVectors(μ: Double) = toOrbitElementsH(μ).toStateVectors(μ)

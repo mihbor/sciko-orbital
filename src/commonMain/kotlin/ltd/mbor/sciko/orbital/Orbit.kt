@@ -15,14 +15,14 @@ val hours = 3600
 const val G  = 6.6742e-20
 //  Earth:
 const val m1 = 5.974e24
-const val R  = 6378.0
+const val rEarth = 6378.0
 const val m2 = 1000.0
-val mu    = G*(m1 + m2)
+val μEarth = G*(m1 + m2)
 const val J2 = 1082.63e-6
 
 fun aJ2(mu: Double, r: MultiArray<Double, D1>): MultiArray<Double, D1> {
   val (x, y, z) = listOf(r[0], r[1], r[2])
-  return -3.0/2*J2*mu*R.pow(2)/r. norm().pow(4)*mk.ndarray(mk[
+  return -3.0/2*J2*mu*rEarth.pow(2)/r. norm().pow(4)*mk.ndarray(mk[
     (1.0 - 5*(z/r.norm()).pow(2))*x/r.norm(),
     (1.0 - 5*(z/r.norm()).pow(2))*y/r.norm(),
     (3.0 - 5*(z/r.norm()).pow(2))*z/r.norm()
@@ -36,7 +36,7 @@ private val v0 = mk.ndarray(mk[-1.74294,-6.70242,-2.27739])
 
 fun main() {
   val y0 = r0 cat v0
-  val (t, y) = rkf45(t0..tf, y0) { t, y -> rates(t, y, aJ2(mu, y.slice(0..2))) }
+  val (t, y) = rkf45(t0..tf, y0) { t, y -> rates(t, y, aJ2(μEarth, y.slice(0..2))) }
 
   output(t, y)
 }
@@ -49,9 +49,9 @@ private fun rates(t: Double, f: MultiArray<Double, D1>, ad: MultiArray<Double, D
   val vy   = f[4]
   val vz   = f[5]
   val r    = (mk.ndarray(mk[x, y, z])).norm()
-  val ax   = -mu*x/r.pow(3) + ad[0]
-  val ay   = -mu*y/r.pow(3) + ad[1]
-  val az   = -mu*z/r.pow(3) + ad[2]
+  val ax   = -μEarth*x/r.pow(3) + ad[0]
+  val ay   = -μEarth*y/r.pow(3) + ad[1]
+  val az   = -μEarth*z/r.pow(3) + ad[2]
 
   return mk.ndarray(mk[vx, vy, vz, ax, ay, az])
 }
@@ -78,9 +78,9 @@ private fun output(t: List<Double>, y: List<MultiArray<Double, D1>>) {
   printf("\n   Magnitude = %g km\n", rf.norm())
   printf("\n The final velocity is [%g, %g, %g] (km/s).",vf[0], vf[1], vf[2])
   printf("\n   Magnitude = %g km/s\n", vf.norm())
-  printf("\n The minimum altitude is %g km at time = %g h.",rmin-R, t[imin]/hours)
+  printf("\n The minimum altitude is %g km at time = %g h.",rmin-rEarth, t[imin]/hours)
   printf("\n The speed at that point is %g km/s.\n", v_at_rmin)
-  printf("\n The maximum altitude is %g km at time = %g h.",rmax-R, t[imax]/hours)
+  printf("\n The maximum altitude is %g km at time = %g h.",rmax-rEarth, t[imax]/hours)
   printf("\n The speed at that point is %g km/s\n", v_at_rmax)
   printf("\n--------------------------------------------------------\n\n")
 
