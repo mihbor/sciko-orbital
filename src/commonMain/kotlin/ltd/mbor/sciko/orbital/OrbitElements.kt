@@ -132,47 +132,41 @@ fun coeFromSV(R: MultiArray<Double, D1>, V: MultiArray<Double, D1>, mu: Double):
   val incl = acos(H[2] / h)
 
   // Equation 4.8
-  val N = mk.ndarray(listOf(0.0, 0.0, 1.0)) cross H
+  val N = mk.ndarray(mk[0.0, 0.0, 1.0]) cross H
   val n = N.norm()
 
   // Equation 4.9
   val RA = if (n != 0.0) {
-    var ra = acos(N[0] / n)
-    if (N[1] < 0) ra = 2 * PI - ra
-    ra
+    val ra = acos(N[0] / n)
+    if (N[1] < 0) 2 * PI - ra else ra
   } else {
     0.0
   }
 
   // Equation 4.10
-  val E = (R * (v.pow(2) - mu / r) - V * (r * vr)) / mu
+  val E = (R*(v.pow(2) - mu/r) - V*r*vr) / mu
   val e = E.norm()
 
   // Equation 4.12
   val w = if (n != 0.0 && e > eps) {
-    var omega = acos((N dot E) / (n * e))
-    if (E[2] < 0) omega = 2 * PI - omega
-    omega
+    val omega = acos((N dot E)/n/e)
+    if (E[2] < 0) 2 * PI - omega else omega
   } else {
     0.0
   }
 
   // Equation 4.13a
   val TA = if (e > eps) {
-    var ta = acos((E dot R) / (e * r))
-    if (vr < 0) ta = 2 * PI - ta
-    ta
+    val ta = acos((E dot R)/e/r)
+    if (vr < 0) 2 * PI - ta else ta
   } else {
     val cp = N cross R
-    if (cp[2] >= 0) {
-      acos((N dot R) / (n * r))
-    } else {
-      2 * PI - acos((N dot R) / (n * r))
-    }
+    val ta = acos((N dot R)/n/r)
+    if (cp[2] >= 0) ta else 2*PI - ta
   }
 
   // Equation 4.62
-  val a = h.pow(2) / mu / (1 - e.pow(2))
+  val a = h.pow(2)/mu/(1 - e.pow(2))
 
   return listOf(h, e, RA, incl, w, TA, a)
 }
