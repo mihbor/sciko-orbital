@@ -4,6 +4,29 @@ import kotlin.math.*
 
 const val mu = 398600.0
 
+
+fun keplerE(e: Double, M: Double): Double {
+  val error = 1.0e-8
+  var E = if (M < PI) M + e/2 else M - e/2
+  var ratio = 1.0
+  while (abs(ratio) > error) {
+    ratio = (E - e*sin(E) - M)/(1 - e* cos(E))
+    E = E - ratio
+  }
+  return E
+}
+
+fun keplerH(e: Double, M: Double): Double {
+  val error = 1.0e-8
+  var F = M
+  var ratio = 1.0
+  while (abs(ratio) > error) {
+    ratio = (e*sinh(F) - F - M)/(e*cosh(F) - 1)
+    F = F - ratio
+  }
+  return F
+}
+
 fun keplerU(dt: Double, ro: Double, vro: Double, a: Double): Double {
   val error = 1e-8
   val nMax = 1000
@@ -28,15 +51,4 @@ fun keplerU(dt: Double, ro: Double, vro: Double, a: Double): Double {
   }
 
   return x
-}
-
-fun keplerE(e: Double, M: Double): Double {
-  val error = 1.0e-8
-  var E = if (M < PI) M + e/2 else M - e/2
-  var ratio = 1.0
-  while (abs(ratio) > error) {
-    ratio = (E - e*sin(E) - M)/(1 - e* cos(E))
-    E = E - ratio
-  }
-  return E
 }
