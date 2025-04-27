@@ -2,12 +2,10 @@ package ltd.mbor.sciko.orbital.examples
 
 import ltd.mbor.sciko.linalg.norm
 import ltd.mbor.sciko.orbital.`RV from R0V0 ta`
+import ltd.mbor.sciko.orbital.degrees
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
-import kotlin.math.PI
-
-val Number.degrees get() = this.toDouble() * PI/180
 
 fun main() {
 

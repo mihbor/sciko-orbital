@@ -2,9 +2,6 @@ package ltd.mbor.sciko.orbital
 
 import kotlin.math.*
 
-const val mu = 398600.0
-
-
 fun keplerE(e: Double, M: Double): Double {
   val error = 1.0e-8
   var E = if (M < PI) M + e/2 else M - e/2
