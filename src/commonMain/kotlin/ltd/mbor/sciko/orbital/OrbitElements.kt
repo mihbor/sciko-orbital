@@ -46,20 +46,17 @@ fun OrbitElementsA.toOrbitElementsH(μ: Double): OrbitElementsH {
 }
 
 fun orbitElementsA(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, D1>): OrbitElementsA {
-  val h = r cross v
-  val a = 1/(2/r.norm() - (v dot v)/μ)
-  val ir = r/r.norm()
-  val e = (v cross h)/μ - ir
-  val ie = e/e.norm()
-  val ih = h/h.norm()
-  val PN = (ie cat (ih cross ie) cat ih).reshape(3, 3)
-  val Ω = atan2(PN[2, 0], -PN[2, 1])
-  val i = acos(PN[2, 2])
-  val ω = atan2(PN[0, 2], PN[1, 2])
-  val f = atan2((ie cross ir) dot ih, ie dot ir)
+  val coe = coeFromSV(r, v, μ)
+  val h = coe[0]
+  val e = coe[1]
+  val Ω = coe[2]
+  val i = coe[3]
+  val ω = coe[4]
+  val f = coe[5]
+  val a = coe[6]
   return OrbitElementsA(
     a = a,
-    e = e.norm(),
+    e = e,
     Ω = Ω,
     i = i,
     ω = ω,
@@ -68,19 +65,17 @@ fun orbitElementsA(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, 
 }
 
 fun orbitElementsH(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, D1>): OrbitElementsH {
-  val h = r cross v
-  val ir = r/r.norm()
-  val e = (v cross h)/μ - ir
-  val ie = e/e.norm()
-  val ih = h/h.norm()
-  val PN = (ie cat (ih cross ie) cat ih).reshape(3, 3)
-  val Ω = atan2(PN[2, 0], -PN[2, 1])
-  val i = acos(PN[2, 2])
-  val ω = atan2(PN[0, 2], PN[1, 2])
-  val f = atan2((ie cross ir) dot ih, ie dot ir)
+  val coe = coeFromSV(r, v, μ)
+  val h = coe[0]
+  val e = coe[1]
+  val Ω = coe[2]
+  val i = coe[3]
+  val ω = coe[4]
+  val f = coe[5]
+  val a = coe[6]
   return OrbitElementsH(
-    h = h.norm(),
-    e = e.norm(),
+    h = h,
+    e = e,
     Ω = Ω,
     i = i,
     ω = ω,
@@ -113,3 +108,72 @@ fun OrbitElementsH.toStateVectors(μ: Double): Pair<MultiArray<Double, D1>, Mult
 }
 
 fun OrbitElementsA.toStateVectors(μ: Double) = toOrbitElementsH(μ).toStateVectors(μ)
+
+fun svFromCoe(coe: MultiArray<Double, D1>, μ: Double) = OrbitElementsA(
+  a = coe[0],
+  e = coe[1],
+  Ω = coe[2],
+  i = coe[3],
+  ω = coe[4],
+  f = coe[5]
+).toStateVectors(μ)
+
+fun coeFromSV(R: MultiArray<Double, D1>, V: MultiArray<Double, D1>, mu: Double): List<Double> {
+  val eps = 1e-10
+
+  val r = R.norm()
+  val v = V.norm()
+  val vr = (R dot V) / r
+
+  val H = R cross V
+  val h = H.norm()
+
+  // Equation 4.7
+  val incl = acos(H[2] / h)
+
+  // Equation 4.8
+  val N = mk.ndarray(listOf(0.0, 0.0, 1.0)) cross H
+  val n = N.norm()
+
+  // Equation 4.9
+  val RA = if (n != 0.0) {
+    var ra = acos(N[0] / n)
+    if (N[1] < 0) ra = 2 * PI - ra
+    ra
+  } else {
+    0.0
+  }
+
+  // Equation 4.10
+  val E = (R * (v.pow(2) - mu / r) - V * (r * vr)) / mu
+  val e = E.norm()
+
+  // Equation 4.12
+  val w = if (n != 0.0 && e > eps) {
+    var omega = acos((N dot E) / (n * e))
+    if (E[2] < 0) omega = 2 * PI - omega
+    omega
+  } else {
+    0.0
+  }
+
+  // Equation 4.13a
+  val TA = if (e > eps) {
+    var ta = acos((E dot R) / (e * r))
+    if (vr < 0) ta = 2 * PI - ta
+    ta
+  } else {
+    val cp = N cross R
+    if (cp[2] >= 0) {
+      acos((N dot R) / (n * r))
+    } else {
+      2 * PI - acos((N dot R) / (n * r))
+    }
+  }
+
+  // Equation 4.62
+  val a = h.pow(2) / mu / (1 - e.pow(2))
+
+  return listOf(h, e, RA, incl, w, TA, a)
+}
+
