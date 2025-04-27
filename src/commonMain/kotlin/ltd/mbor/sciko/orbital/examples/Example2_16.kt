@@ -29,7 +29,7 @@ private fun output(m1: Double, m2: Double, r12: Double, x: List<Double>) {
   println("\n   m1 = $m1 kg")
   println("\n   m2 = $m2 kg")
   println("\n  r12 = $r12 km\n")
-  println("\n the 3 colinear Lagrange points (the roots of\n")
+  println("\n the 3 collinear Lagrange points (the roots of\n")
   println(" Equation 2.204) are:\n")
   println("\n L3: x = ${x[0] * r12} km    (f(x3) = ${f(x[0])})")
   println("\n L1: x = ${x[1] * r12} km    (f(x1) = ${f(x[1])})")
