@@ -118,6 +118,8 @@ fun svFromCoe(coe: MultiArray<Double, D1>, μ: Double) = OrbitElementsA(
   f = coe[5]
 ).toStateVectors(μ)
 
+private fun acos(a: Double) = kotlin.math.acos(a.coerceAtLeast(-1.0).coerceAtMost(1.0))
+
 fun coeFromSV(R: MultiArray<Double, D1>, V: MultiArray<Double, D1>, mu: Double): List<Double> {
   val eps = 1e-10
 
