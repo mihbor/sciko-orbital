@@ -24,7 +24,7 @@ fun keplerH(e: Double, M: Double): Double {
   return F
 }
 
-fun keplerU(dt: Double, ro: Double, vro: Double, a: Double): Double {
+fun keplerU(dt: Double, ro: Double, vro: Double, a: Double, mu: Double = muEarth): Double {
   val error = 1e-8
   val nMax = 1000
 

@@ -12,6 +12,7 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.div
 import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.plus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
+import μEarth
 import kotlin.math.*
 
 data class OrbitElementsA(
@@ -21,6 +22,17 @@ data class OrbitElementsA(
   val i: Double,
   val ω: Double,
   val f: Double
+) {
+  val θ: Double get() = f + ω
+}
+
+data class OrbitElementsAM(
+  val a: Double,
+  val e: Double,
+  val Ω: Double,
+  val i: Double,
+  val ω: Double,
+  val M: Double
 )
 
 data class OrbitElementsH(
@@ -30,9 +42,11 @@ data class OrbitElementsH(
   val i: Double,
   val ω: Double,
   val f: Double
-)
+) {
+  val θ: Double get() = f + ω
+}
 
-fun OrbitElementsA.toOrbitElementsH(μ: Double): OrbitElementsH {
+fun OrbitElementsA.toOrbitElementsH(μ: Double = μEarth): OrbitElementsH {
   val p = a*(1-e.pow(2))
   val h = sqrt(μ*p)
   return OrbitElementsH(
@@ -45,7 +59,7 @@ fun OrbitElementsA.toOrbitElementsH(μ: Double): OrbitElementsH {
   )
 }
 
-fun orbitElementsA(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, D1>): OrbitElementsA {
+fun orbitElementsA(r: MultiArray<Double, D1>, v: MultiArray<Double, D1>, μ: Double = μEarth): OrbitElementsA {
   val coe = coeFromSV(r, v, μ)
   val h = coe[0]
   val e = coe[1]
@@ -64,7 +78,7 @@ fun orbitElementsA(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, 
   )
 }
 
-fun orbitElementsH(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, D1>): OrbitElementsH {
+fun orbitElementsH(r: MultiArray<Double, D1>, v: MultiArray<Double, D1>, μ: Double = μEarth): OrbitElementsH {
   val coe = coeFromSV(r, v, μ)
   val h = coe[0]
   val e = coe[1]
@@ -72,7 +86,6 @@ fun orbitElementsH(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, 
   val i = coe[3]
   val ω = coe[4]
   val f = coe[5]
-  val a = coe[6]
   return OrbitElementsH(
     h = h,
     e = e,
@@ -83,7 +96,21 @@ fun orbitElementsH(μ: Double, r: MultiArray<Double, D1>, v: MultiArray<Double, 
   )
 }
 
-fun OrbitElementsH.toStateVectors(μ: Double): Pair<MultiArray<Double, D1>, MultiArray<Double, D1>> {
+fun OrbitElementsA.toOrbitElementsAM(): OrbitElementsAM {
+  return OrbitElementsAM(
+    a = a,
+    e = e,
+    Ω = Ω,
+    i = i,
+    ω = ω,
+    M = M(E(f, e), e),
+  )
+}
+
+fun E(f: Double, e: Double) = 2*atan(tan(f/2)*sqrt(1 - e)/sqrt(1 + e))
+fun M(E: Double, e: Double) = E - e*sin(E)
+
+fun OrbitElementsH.toStateVectors(μ: Double = μEarth): Pair<MultiArray<Double, D1>, MultiArray<Double, D1>> {
   val rp = h.pow(2)/μ/(1.0 + e*cos(f)) * (cos(f)*mk.ndarray(mk[1.0, 0.0, 0.0]) + sin(f)*mk.ndarray(mk[0.0, 1.0, 0.0]))
   val vp = μ/h * (-sin(f)*mk.ndarray(mk[1.0, 0.0, 0.0]) + (e + cos(f))*mk.ndarray(mk[0.0, 1.0, 0.0]))
   val R3Ω = mk.ndarray(mk[
