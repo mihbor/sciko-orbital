@@ -136,8 +136,8 @@ fun OrbitElementsH.toStateVectors(μ: Double = μEarth): Pair<MultiArray<Double,
 
 fun OrbitElementsA.toStateVectors(μ: Double) = toOrbitElementsH(μ).toStateVectors(μ)
 
-fun svFromCoe(coe: MultiArray<Double, D1>, μ: Double) = OrbitElementsA(
-  a = coe[0],
+fun svFromCoe(coe: MultiArray<Double, D1>, μ: Double) = OrbitElementsH(
+  h = coe[0],
   e = coe[1],
   Ω = coe[2],
   i = coe[3],
