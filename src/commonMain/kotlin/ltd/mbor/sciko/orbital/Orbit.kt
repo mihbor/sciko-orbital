@@ -1,5 +1,6 @@
+package ltd.mbor.sciko.orbital
+
 import ltd.mbor.sciko.linalg.norm
-import ltd.mbor.sciko.orbital.rkf45
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.api.zeros
@@ -12,10 +13,8 @@ import kotlin.math.pow
 
 val hours = 3600
 
-const val G  = 6.6742e-20
 //  Earth:
 const val m1 = 5.974e24
-const val rEarth = 6378.0
 const val m2 = 1000.0
 val μEarth = G*(m1 + m2)
 const val J2 = 1082.63e-6

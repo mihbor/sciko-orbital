@@ -11,8 +11,6 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.pow
 
-const val G = 6.67259e-20
-
 fun main() {
   val t0 = 0.0
   val tf = 480.0
