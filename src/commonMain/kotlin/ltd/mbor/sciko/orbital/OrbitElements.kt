@@ -1,15 +1,11 @@
 package ltd.mbor.sciko.orbital
 
-import ltd.mbor.sciko.linalg.cross
-import ltd.mbor.sciko.linalg.norm
 import org.jetbrains.kotlinx.multik.api.linalg.dot
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
-import org.jetbrains.kotlinx.multik.ndarray.operations.div
-import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.plus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.*
@@ -143,57 +139,3 @@ fun svFromCoe(coe: MultiArray<Double, D1>, μ: Double) = OrbitElementsH(
   ω = coe[4],
   f = coe[5]
 ).toStateVectors(μ)
-
-fun coeFromSV(R: MultiArray<Double, D1>, V: MultiArray<Double, D1>, mu: Double): List<Double> {
-  val eps = 1e-10
-
-  val r = R.norm()
-  val v = V.norm()
-  val vr = (R dot V) / r
-
-  val H = R cross V
-  val h = H.norm()
-
-  // Equation 4.7
-  val incl = acos(H[2] / h)
-
-  // Equation 4.8
-  val N = mk.ndarray(mk[0.0, 0.0, 1.0]) cross H
-  val n = N.norm()
-
-  // Equation 4.9
-  val RA = if (n != 0.0) {
-    val ra = acos(N[0] / n)
-    if (N[1] < 0) 2 * PI - ra else ra
-  } else {
-    0.0
-  }
-
-  // Equation 4.10
-  val E = (R*(v.pow(2) - mu/r) - V*r*vr) / mu
-  val e = E.norm()
-
-  // Equation 4.12
-  val w = if (n != 0.0 && e > eps) {
-    val omega = acos((N dot E)/n/e)
-    if (E[2] < 0) 2 * PI - omega else omega
-  } else {
-    0.0
-  }
-
-  // Equation 4.13a
-  val TA = if (e > eps) {
-    val ta = acos((E dot R)/e/r)
-    if (vr < 0) 2 * PI - ta else ta
-  } else {
-    val cp = N cross R
-    val ta = acos((N dot R)/n/r)
-    if (cp[2] >= 0) ta else 2*PI - ta
-  }
-
-  // Equation 4.62
-  val a = h.pow(2)/mu/(1 - e.pow(2))
-
-  return listOf(h, e, RA, incl, w, TA, a)
-}
-
