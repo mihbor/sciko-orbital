@@ -3,6 +3,8 @@ import Trajectory.RETROGRADE
 import ltd.mbor.sciko.linalg.cross
 import ltd.mbor.sciko.linalg.norm
 import ltd.mbor.sciko.orbital.muEarth
+import ltd.mbor.sciko.orbital.pow
+import ltd.mbor.sciko.orbital.sqrt
 import ltd.mbor.sciko.orbital.stumpC
 import ltd.mbor.sciko.orbital.stumpS
 import org.jetbrains.kotlinx.multik.api.linalg.dot
@@ -100,16 +102,3 @@ private fun dFdz(z: Double, r1: Double, r2: Double, A: Double): Double {
 fun C(z: Double) = stumpC(z)
 
 fun S(z: Double) = stumpS(z)
-
-fun ComplexDouble.pow(x: Double): ComplexDouble {
-    val r = sqrt(this.re * this.re + this.im * this.im)
-    val theta = atan2(this.im, this.re)
-    val newR = r.pow(x)
-    val newTheta = theta * x
-    return ComplexDouble(
-        re = newR * cos(newTheta),
-        im = newR * sin(newTheta)
-    )
-}
-
-fun sqrt(x: ComplexDouble) = x.pow(0.5)
