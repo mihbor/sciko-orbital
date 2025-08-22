@@ -40,7 +40,7 @@ fun lambert(
 
   // Find initial z where F(z, t) changes sign
   var z = -100.0
-  while (F(z, t, r1, r2, A) < 0) {
+  while (F(z, t, r1, r2, A, mu) < 0) {
     z += 0.1
   }
 
@@ -50,7 +50,7 @@ fun lambert(
   var n = 0
   do {
     n += 1
-    ratio = F(z, t, r1, r2, A) / dFdz(z, r1, r2, A)
+    ratio = F(z, t, r1, r2, A, mu) / dFdz(z, r1, r2, A)
     z -= ratio
   } while (abs(ratio) > tol && n <= nmax)
 
@@ -78,10 +78,11 @@ private fun F(
   r1: Double,
   r2: Double,
   A: Double,
-  mu: Double = muEarth,
+  mu: Double,
 ): Double {
   val y = ComplexDouble(re = y(z, r1, r2, A))
-  return ((y/C(z)).pow(1.5)*S(z) + sqrt(y)*A - sqrt(mu)*t).re
+  val F = (y/C(z)).pow(1.5)*S(z) + sqrt(y)*A - sqrt(mu)*t
+  return F.re
 }
 
 private fun dFdz(z: Double, r1: Double, r2: Double, A: Double): Double {
