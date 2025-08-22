@@ -1,6 +1,11 @@
-package ltd.mbor.sciko.orbital
+package ltd.mbor.sciko.orbital.examples
 
 import ltd.mbor.sciko.linalg.norm
+import ltd.mbor.sciko.orbital.degrees
+import ltd.mbor.sciko.orbital.muEarth
+import ltd.mbor.sciko.orbital.rvaRelative
+import ltd.mbor.sciko.orbital.svFromCoe
+import ltd.mbor.sciko.orbital.toDegrees
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.operations.toList

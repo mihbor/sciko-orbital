@@ -1,4 +1,5 @@
-import ltd.mbor.sciko.orbital.examples.plotScalar
+package ltd.mbor.sciko.orbital.examples
+
 import ltd.mbor.sciko.orbital.rkf45
 import org.jetbrains.kotlinx.kandy.letsplot.export.save
 import org.jetbrains.kotlinx.kandy.letsplot.multiplot.plotGrid

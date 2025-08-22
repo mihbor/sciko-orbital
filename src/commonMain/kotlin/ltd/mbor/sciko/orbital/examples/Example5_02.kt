@@ -1,4 +1,8 @@
+package ltd.mbor.sciko.orbital.examples
+
+import ltd.mbor.sciko.orbital.Trajectory
 import ltd.mbor.sciko.orbital.coeFromSV
+import ltd.mbor.sciko.orbital.lambert
 import ltd.mbor.sciko.orbital.muEarth
 import ltd.mbor.sciko.orbital.toDegrees
 import org.jetbrains.kotlinx.multik.api.KEEngineType

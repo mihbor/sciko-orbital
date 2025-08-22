@@ -1,6 +1,7 @@
+package ltd.mbor.sciko.orbital
+
 import ltd.mbor.sciko.linalg.cross
 import ltd.mbor.sciko.linalg.norm
-import ltd.mbor.sciko.orbital.muEarth
 import org.jetbrains.kotlinx.multik.api.linalg.dot
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray

@@ -1,10 +1,8 @@
+package ltd.mbor.sciko.orbital
 
 import ltd.mbor.sciko.analysis.solvers.LaguerreSolver
 import ltd.mbor.sciko.linalg.cross
 import ltd.mbor.sciko.linalg.norm
-import ltd.mbor.sciko.orbital.`f and g`
-import ltd.mbor.sciko.orbital.keplerU
-import ltd.mbor.sciko.orbital.muEarth
 import org.jetbrains.kotlinx.multik.api.linalg.dot
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray

@@ -1,5 +1,8 @@
+package ltd.mbor.sciko.orbital.examples
+
 import ltd.mbor.sciko.orbital.coeFromSV
 import ltd.mbor.sciko.orbital.degrees
+import ltd.mbor.sciko.orbital.gauss
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.api.zeros
