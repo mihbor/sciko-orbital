@@ -3,3 +3,6 @@ plugins {
 }
 rootProject.name = "sciko-orbital"
 
+include("sciko-orbital")
+project(":sciko-orbital").projectDir = file("core")
+include("examples")

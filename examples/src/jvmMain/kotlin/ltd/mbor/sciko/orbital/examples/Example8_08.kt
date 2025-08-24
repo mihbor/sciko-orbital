@@ -95,3 +95,7 @@ fun main() {
   }
 
 }
+
+private fun printf(format: String, vararg args: Any?) {
+  System.out.printf(format, *args)
+}

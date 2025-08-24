@@ -1,5 +1,10 @@
-package ltd.mbor.sciko.orbital
+package ltd.mbor.sciko.orbital.examples
 
+import ltd.mbor.sciko.orbital.`RA and Dec from R`
+import ltd.mbor.sciko.orbital.degrees
+import ltd.mbor.sciko.orbital.keplerE
+import ltd.mbor.sciko.orbital.svFromCoe
+import ltd.mbor.sciko.orbital.toDegrees
 import org.jetbrains.kotlinx.kandy.dsl.plot
 import org.jetbrains.kotlinx.kandy.ir.Plot
 import org.jetbrains.kotlinx.kandy.letsplot.export.save

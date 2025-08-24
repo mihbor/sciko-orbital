@@ -41,7 +41,7 @@ data class OrbitElementsH(
   val θ: Double get() = f + ω
 }
 
-fun OrbitElementsA.toOrbitElementsH(μ: Double = μEarth): OrbitElementsH {
+fun OrbitElementsA.toOrbitElementsH(μ: Double = muEarth): OrbitElementsH {
   val p = a*(1-e.pow(2))
   val h = sqrt(μ*p)
   return OrbitElementsH(
@@ -54,7 +54,7 @@ fun OrbitElementsA.toOrbitElementsH(μ: Double = μEarth): OrbitElementsH {
   )
 }
 
-fun orbitElementsA(r: MultiArray<Double, D1>, v: MultiArray<Double, D1>, μ: Double = μEarth): OrbitElementsA {
+fun orbitElementsA(r: MultiArray<Double, D1>, v: MultiArray<Double, D1>, μ: Double = muEarth): OrbitElementsA {
   val coe = coeFromSV(r, v, μ)
   val h = coe[0]
   val e = coe[1]
@@ -73,7 +73,7 @@ fun orbitElementsA(r: MultiArray<Double, D1>, v: MultiArray<Double, D1>, μ: Dou
   )
 }
 
-fun orbitElementsH(r: MultiArray<Double, D1>, v: MultiArray<Double, D1>, μ: Double = μEarth): OrbitElementsH {
+fun orbitElementsH(r: MultiArray<Double, D1>, v: MultiArray<Double, D1>, μ: Double = muEarth): OrbitElementsH {
   val coe = coeFromSV(r, v, μ)
   val h = coe[0]
   val e = coe[1]
@@ -105,7 +105,7 @@ fun OrbitElementsA.toOrbitElementsAM(): OrbitElementsAM {
 fun E(f: Double, e: Double) = 2*atan(tan(f/2)*sqrt(1 - e)/sqrt(1 + e))
 fun M(E: Double, e: Double) = E - e*sin(E)
 
-fun OrbitElementsH.toStateVectors(μ: Double = μEarth): Pair<MultiArray<Double, D1>, MultiArray<Double, D1>> {
+fun OrbitElementsH.toStateVectors(μ: Double = muEarth): Pair<MultiArray<Double, D1>, MultiArray<Double, D1>> {
   val rp = h.pow(2)/μ/(1.0 + e*cos(f)) * (cos(f)*mk.ndarray(mk[1.0, 0.0, 0.0]) + sin(f)*mk.ndarray(mk[0.0, 1.0, 0.0]))
   val vp = μ/h * (-sin(f)*mk.ndarray(mk[1.0, 0.0, 0.0]) + (e + cos(f))*mk.ndarray(mk[0.0, 1.0, 0.0]))
   val R3Ω = mk.ndarray(mk[

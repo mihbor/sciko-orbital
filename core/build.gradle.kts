@@ -17,15 +17,8 @@ kotlin {
       dependencies {
         api("org.jetbrains.kotlinx:multik-core:0.2.3")
         implementation("org.jetbrains.kotlinx:multik-default:0.2.3")
-        implementation("org.jetbrains.kotlinx:kandy-lets-plot:0.8.0")
         implementation("com.github.mihbor:sciko-linalg:main-SNAPSHOT")
         implementation("com.github.mihbor:sciko-analysis:main-SNAPSHOT")
-      }
-    }
-    val commonTest by getting {
-      dependencies {
-        implementation(kotlin("test"))
-        implementation("com.ionspin.kotlin:bignum:0.3.10")
       }
     }
   }

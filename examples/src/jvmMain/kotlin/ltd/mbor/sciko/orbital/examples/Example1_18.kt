@@ -49,10 +49,10 @@ fun main() {
 
   plotGrid(
     listOf(
-      plotScalar(Triple(t1, f1.map{ it[0] }, "h = 0.01"), Triple(t11, f11.map{ it[0] }, "h = 0.1")),
-      plotScalar(Triple(t2, f2.map{ it[0] }, "h = 0.1"), Triple(t21, f21.map{ it[0] }, "h = 0.5")),
-      plotScalar(Triple(t3, f3.map{ it[0] }, "h = 0.5"), Triple(t31, f31.map{ it[0] }, "h = 1.0")),
-      plotScalar(Triple(t4, f4.map{ it[0] }, "h = 1.0"), Triple(t41, f41.map{ it[0] }, "h = 2.0")),
+      plotScalar(Triple(t1, f1.map { it[0] }, "h = 0.01"), Triple(t11, f11.map { it[0] }, "h = 0.1")),
+      plotScalar(Triple(t2, f2.map { it[0] }, "h = 0.1"), Triple(t21, f21.map { it[0] }, "h = 0.5")),
+      plotScalar(Triple(t3, f3.map { it[0] }, "h = 0.5"), Triple(t31, f31.map { it[0] }, "h = 1.0")),
+      plotScalar(Triple(t4, f4.map { it[0] }, "h = 1.0"), Triple(t41, f41.map { it[0] }, "h = 2.0")),
     ),
     nCol = 1
   ).save("Example1_18.png")

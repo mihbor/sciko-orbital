@@ -1,6 +1,8 @@
-package ltd.mbor.sciko.orbital
+package ltd.mbor.sciko.orbital.examples
 
 import ltd.mbor.sciko.linalg.norm
+import ltd.mbor.sciko.orbital.G
+import ltd.mbor.sciko.orbital.rkf45
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D1

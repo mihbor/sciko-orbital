@@ -6,8 +6,14 @@ import kotlin.math.*
 const val G = 6.6742e-20
 const val muEarth = 398600.0 // km^3/s^2
 const val rEarth = 6378.0 //km
+const val mEarth = 5974e21
+
+const val J2 = 1082.63e-6
 
 const val muSun = 1.32712440018e11
+
+const val rMoon = 1737.0
+const val mMoon = 7348e19
 
 val Number.degrees get() = this.toDouble() * PI/180
 fun Number.toDegrees() = this.toDouble()*180/PI

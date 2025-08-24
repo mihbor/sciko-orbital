@@ -1,5 +1,10 @@
 package ltd.mbor.sciko.orbital.examples
 
+import ltd.mbor.sciko.orbital.mEarth
+import ltd.mbor.sciko.orbital.mMoon
+import ltd.mbor.sciko.orbital.muEarth
+import ltd.mbor.sciko.orbital.rEarth
+import ltd.mbor.sciko.orbital.rMoon
 import ltd.mbor.sciko.orbital.rkf45
 import org.jetbrains.kotlinx.kandy.dsl.continuous
 import org.jetbrains.kotlinx.kandy.dsl.plot
@@ -17,12 +22,9 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 private const val days = 24 * 3600
-private const val G = 6.6742e-20
-private const val rmoon = 1737.0
-private const val rearth = 6378.0
+private const val m1 = mEarth
+private const val m2 = mMoon
 private const val r12 = 384400.0
-private const val m1 = 5974e21
-private const val m2 = 7348e19
 
 private val M = m1 + m2
 private val pi_1 = m1 / M
@@ -42,7 +44,7 @@ private val v0 = 10.9148
 private val gamma = 20.0
 private val t0 = 0.0
 private val tf = 3.16689 * days
-private val r0 = rearth + d0
+private val r0 = rEarth + d0
 private val x = r0 * cos(Math.toRadians(phi)) + x1
 private val y = r0 * sin(Math.toRadians(phi))
 
@@ -59,7 +61,7 @@ fun main() {
   val vxf = f.last()[2]
   val vyf = f.last()[3]
 
-  val df = sqrt((xf - x2).pow(2) + yf.pow(2)) - rmoon
+  val df = sqrt((xf - x2).pow(2) + yf.pow(2)) - rMoon
   val vf = sqrt(vxf.pow(2) + vyf.pow(2))
 
   output(d0, phi, gamma, tf, df, vf, f)

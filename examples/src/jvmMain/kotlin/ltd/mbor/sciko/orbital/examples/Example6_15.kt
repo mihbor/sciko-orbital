@@ -96,6 +96,6 @@ fun main() {
   printf("\n\n--------------------------------------------------------\n\n")
 }
 
-fun printf(format: String, vararg args: Any?) {
+private fun printf(format: String, vararg args: Any?) {
   System.out.printf(format, *args)
 }

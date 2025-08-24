@@ -1,6 +1,10 @@
-package ltd.mbor.sciko.orbital
+package ltd.mbor.sciko.orbital.examples
 
 import ltd.mbor.sciko.linalg.norm
+import ltd.mbor.sciko.orbital.J2
+import ltd.mbor.sciko.orbital.muEarth
+import ltd.mbor.sciko.orbital.rEarth
+import ltd.mbor.sciko.orbital.rkf45
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.api.zeros
@@ -12,12 +16,6 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.pow
 
 val hours = 3600
-
-//  Earth:
-const val m1 = 5.974e24
-const val m2 = 1000.0
-val μEarth = G*(m1 + m2)
-const val J2 = 1082.63e-6
 
 fun aJ2(mu: Double, r: MultiArray<Double, D1>): MultiArray<Double, D1> {
   val (x, y, z) = listOf(r[0], r[1], r[2])
@@ -35,7 +33,7 @@ private val v0 = mk.ndarray(mk[-1.74294,-6.70242,-2.27739])
 
 fun main() {
   val y0 = r0 cat v0
-  val (t, y) = rkf45(t0..tf, y0) { t, y -> rates(t, y, aJ2(μEarth, y.slice(0..2))) }
+  val (t, y) = rkf45(t0..tf, y0) { t, y -> rates(t, y, aJ2(muEarth, y.slice(0..2))) }
 
   output(t, y)
 }
@@ -48,9 +46,9 @@ private fun rates(t: Double, f: MultiArray<Double, D1>, ad: MultiArray<Double, D
   val vy   = f[4]
   val vz   = f[5]
   val r    = (mk.ndarray(mk[x, y, z])).norm()
-  val ax   = -μEarth*x/r.pow(3) + ad[0]
-  val ay   = -μEarth*y/r.pow(3) + ad[1]
-  val az   = -μEarth*z/r.pow(3) + ad[2]
+  val ax   = -muEarth*x/r.pow(3) + ad[0]
+  val ay   = -muEarth*y/r.pow(3) + ad[1]
+  val az   = -muEarth*z/r.pow(3) + ad[2]
 
   return mk.ndarray(mk[vx, vy, vz, ax, ay, az])
 }
@@ -86,7 +84,7 @@ private fun output(t: List<Double>, y: List<MultiArray<Double, D1>>) {
   // TODO: 3d plotting
 }
 
-fun printf(format: String, vararg args: Any?) {
+private fun printf(format: String, vararg args: Any?) {
   System.out.printf(format, *args)
 }
 

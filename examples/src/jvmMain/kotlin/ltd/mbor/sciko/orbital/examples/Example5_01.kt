@@ -16,9 +16,9 @@ fun main() {
   mk.setEngine(KEEngineType)
 
   // Data declaration for Example 5.1
-  val r1 = mk.ndarray(doubleArrayOf(-294.32, 4265.1, 5986.7))
-  val r2 = mk.ndarray(doubleArrayOf(-1365.5, 3637.6, 6346.8))
-  val r3 = mk.ndarray(doubleArrayOf(-2940.3, 2473.7, 6555.8))
+  val r1 = mk.ndarray(mk[-294.32, 4265.1, 5986.7])
+  val r2 = mk.ndarray(mk[-1365.5, 3637.6, 6346.8])
+  val r3 = mk.ndarray(mk[-2940.3, 2473.7, 6555.8])
 
   println("-----------------------------------------------------")
   println(" Example 5.1: Gibbs Method\n")
