@@ -1,8 +1,8 @@
 package ltd.mbor.sciko.orbital
 
-import java.lang.Math.log
 import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.ln
 
 /**
  *   This function evaluates a root of a function using
@@ -21,7 +21,7 @@ import kotlin.math.ceil
  */
 fun bisect(f: (Double) -> Double, xl: Double, xu: Double): Double {
   val tol = 1e-6
-  val n = ceil(log(abs(xu - xl) / tol) / log(2.0)).toInt()
+  val n = ceil(ln(abs(xu - xl) / tol)/ ln(2.0)).toInt()
 
   var xl = xl
   var xu = xu

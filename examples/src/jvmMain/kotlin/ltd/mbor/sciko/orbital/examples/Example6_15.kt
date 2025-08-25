@@ -66,7 +66,7 @@ fun main() {
   val a = coe[6]
 
   val dtheta = if (TA <= PI) PI - TA else 3*PI - TA
-  val (ra, va) = `RV from R0V0 ta`(r1, v1, dtheta, mu)
+  val (ra, va) = RVfromR0V0TA(r1, v1, dtheta, mu)
   val rmax = ra.norm()
 
   printf("\n\n--------------------------------------------------------\n")

@@ -1,6 +1,6 @@
 package ltd.mbor.sciko.orbital.examples
 
-import ltd.mbor.sciko.orbital.`RA and Dec from R`
+import ltd.mbor.sciko.orbital.RAandDecFromR
 import ltd.mbor.sciko.orbital.degrees
 import ltd.mbor.sciko.orbital.keplerE
 import ltd.mbor.sciko.orbital.svFromCoe
@@ -130,7 +130,7 @@ fun findRaAndDec(
     val Q = rotationZ(theta)
     val rRel = Q dot R
 
-    val (alpha, delta) = `RA and Dec from R`(rRel)
+    val (alpha, delta) = RAandDecFromR(rRel)
     ra.add(alpha)
     dec.add(delta)
   }

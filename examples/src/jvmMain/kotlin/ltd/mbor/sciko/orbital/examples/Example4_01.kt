@@ -1,13 +1,13 @@
 package ltd.mbor.sciko.orbital.examples
 
-import ltd.mbor.sciko.orbital.`RA and Dec from R`
+import ltd.mbor.sciko.orbital.RAandDecFromR
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
 
 fun main() {
   val r = mk.ndarray(mk[-5368.0, -1784.0, 3691.0])
-  val (ra, dec) = `RA and Dec from R`(r)
+  val (ra, dec) = RAandDecFromR(r)
 
   println("\n -----------------------------------------------------")
   println("\n Example 4.1")

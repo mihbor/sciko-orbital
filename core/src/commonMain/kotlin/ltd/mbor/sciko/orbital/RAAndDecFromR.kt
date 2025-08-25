@@ -8,7 +8,7 @@ import kotlin.math.acos
 import kotlin.math.asin
 import kotlin.math.cos
 
-fun `RA and Dec from R`(r: MultiArray<Double, D1>): Pair<Double, Double> {
+fun RAandDecFromR(r: MultiArray<Double, D1>): Pair<Double, Double> {
   // Normalize the position vector components
   val rNorm = r.norm()
   val l = r[0] / rNorm
@@ -20,9 +20,9 @@ fun `RA and Dec from R`(r: MultiArray<Double, D1>): Pair<Double, Double> {
 
   // Calculate right ascension in degrees
   val ra = if (m > 0) {
-    acos(l / cos(Math.toRadians(dec))).toDegrees()
+    acos(l / cos(dec.degrees)).toDegrees()
   } else {
-    360 - acos(l / cos(Math.toRadians(dec))).toDegrees()
+    360 - acos(l / cos(dec.degrees)).toDegrees()
   }
 
   return ra to dec

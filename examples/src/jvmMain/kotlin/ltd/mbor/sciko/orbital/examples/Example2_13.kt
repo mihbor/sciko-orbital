@@ -1,7 +1,7 @@
 package ltd.mbor.sciko.orbital.examples
 
 import ltd.mbor.sciko.linalg.norm
-import ltd.mbor.sciko.orbital.`RV from R0V0 ta`
+import ltd.mbor.sciko.orbital.RVfromR0V0TA
 import ltd.mbor.sciko.orbital.degrees
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
@@ -15,7 +15,7 @@ fun main() {
   val V0 = mk.ndarray(mk[0.47572, 8.8116, 0.0])
   val dta = 120.degrees
 
-  val (R, V) = `RV from R0V0 ta`(R0, V0, dta, mu)
+  val (R, V) = RVfromR0V0TA(R0, V0, dta, mu)
 
   val r  = R.norm()
   val v  = V.norm()

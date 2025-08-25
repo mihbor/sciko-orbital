@@ -1,6 +1,6 @@
 package ltd.mbor.sciko.orbital.examples
 
-import ltd.mbor.sciko.orbital.`RV from R0V0`
+import ltd.mbor.sciko.orbital.RVfromR0V0
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
@@ -15,7 +15,7 @@ fun main() {
   val t = 3600.0
 
   // Algorithm 3.4: Compute the final state vector (R, V)
-  val (R, V) = `RV from R0V0`(R0, V0, t, mu)
+  val (R, V) = RVfromR0V0(R0, V0, t, mu)
 
   // Echo the input data and output the results to the console
   println("-----------------------------------------------------")

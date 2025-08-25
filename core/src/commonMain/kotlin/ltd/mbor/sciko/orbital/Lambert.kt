@@ -32,8 +32,8 @@ fun lambert(
   var theta = acos((R1 dot R2) / r1 / r2)
 
   when (traj) {
-    PROGRADE -> if (c12[2] <= 0.0) theta = 2*Math.PI - theta
-    RETROGRADE -> if (c12[2] >= 0.0) theta = 2*Math.PI - theta
+    PROGRADE -> if (c12[2] <= 0.0) theta = 2*PI - theta
+    RETROGRADE -> if (c12[2] >= 0.0) theta = 2*PI - theta
   }
 
   val A = sin(theta) * sqrt(r1 * r2 / (1 - cos(theta)))

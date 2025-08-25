@@ -7,7 +7,6 @@ import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.operations.plus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
-import java.lang.Math.PI
 import kotlin.math.*
 
 fun rvFromObserve(

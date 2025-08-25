@@ -117,8 +117,8 @@ fun gauss(
     val x1 = keplerU(tau1, ro, vro, aRecip, mu)
     val x3 = keplerU(tau3, ro, vro, aRecip, mu)
 
-    val (ff1, gg1) = `f and g`(x1, tau1, ro, aRecip, mu)
-    val (ff3, gg3) = `f and g`(x3, tau3, ro, aRecip, mu)
+    val (ff1, gg1) = fg(x1, tau1, ro, aRecip, mu)
+    val (ff3, gg3) = fg(x3, tau3, ro, aRecip, mu)
 
     val f1New = (f1 + ff1) / 2
     val f3New = (f3 + ff3) / 2

@@ -10,7 +10,7 @@ import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-fun `f and g`(x: Double, t: Double, ro: Double, a: Double, mu: Double) : Pair<Double, Double> {
+fun fg(x: Double, t: Double, ro: Double, a: Double, mu: Double) : Pair<Double, Double> {
 
   val z = a*x.pow(2)
 
@@ -21,7 +21,7 @@ fun `f and g`(x: Double, t: Double, ro: Double, a: Double, mu: Double) : Pair<Do
   return f to g
 }
 
-fun `f and g ta`(r0: MultiArray<Double, D1>, v0: MultiArray<Double, D1>, dta: Double, mu: Double) : Pair<Double, Double> {
+fun fgTA(r0: MultiArray<Double, D1>, v0: MultiArray<Double, D1>, dta: Double, mu: Double) : Pair<Double, Double> {
 
   val h   = (r0 cross v0).norm()
   val vr0 = (v0 dot r0)/r0.norm()
@@ -37,7 +37,7 @@ fun `f and g ta`(r0: MultiArray<Double, D1>, v0: MultiArray<Double, D1>, dta: Do
   return f to g
 }
 
-fun `fDot and gDot`(x: Double, r: Double, ro: Double, a: Double, mu: Double): Pair<Double, Double> {
+fun fDotgDot(x: Double, r: Double, ro: Double, a: Double, mu: Double): Pair<Double, Double> {
   val z = a * x.pow(2)
   val C = stumpC(z)
   val S = stumpS(z)
@@ -46,7 +46,7 @@ fun `fDot and gDot`(x: Double, r: Double, ro: Double, a: Double, mu: Double): Pa
   return Pair(fdot, gdot)
 }
 
-fun `fDot and gDot ta`(r0: MultiArray<Double, D1>, v0: MultiArray<Double, D1>, dta: Double, mu: Double): Pair<Double, Double> {
+fun fDotgDotTA(r0: MultiArray<Double, D1>, v0: MultiArray<Double, D1>, dta: Double, mu: Double): Pair<Double, Double> {
   val h   = (r0 cross v0).norm()
   val vr0 = (v0 dot r0)/r0.norm()
   val r0  = r0.norm()
