@@ -3,6 +3,7 @@ package ltd.mbor.sciko.orbital.examples
 import ltd.mbor.sciko.linalg.norm
 import ltd.mbor.sciko.orbital.G
 import ltd.mbor.sciko.orbital.rkf45
+import org.jetbrains.kotlinx.multik.api.KEEngineType
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
@@ -14,6 +15,7 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.pow
 
 fun main() {
+  mk.setEngine(KEEngineType)
   val t0 = 0.0
   val tf = 480.0
 
@@ -43,6 +45,8 @@ private fun rates(t: Double, y: MultiArray<Double, D1>): MultiArray<Double, D1> 
 
   val A1 = G*m2*(R2 - R1)/r.pow(3)
   val A2 = G*m1*(R1 - R2)/r.pow(3)
+
+  println("t[$t]: $y")
 
   return V1 cat V2 cat A1 cat A2
 }

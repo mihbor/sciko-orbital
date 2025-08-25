@@ -8,22 +8,25 @@ version = "0.1-SNAPSHOT"
 
 repositories {
   mavenCentral()
-  maven("https://jitpack.io")
+  maven {
+    name = "GitHubPackages"
+    url = uri("https://maven.pkg.github.com/mihbor/sciko-linalg")
+    credentials {
+      username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+      password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+    }
+  }
 }
 
 kotlin {
+  jvm()
+  jvmToolchain(21)
   sourceSets {
     val commonMain by getting {
       dependencies {
-        api("org.jetbrains.kotlinx:multik-core:0.2.3")
-        implementation("org.jetbrains.kotlinx:multik-default:0.2.3")
         implementation("org.jetbrains.kotlinx:kandy-lets-plot:0.8.0")
-        implementation("com.github.mihbor:sciko-linalg:main-SNAPSHOT")
-        implementation("com.github.mihbor:sciko-analysis:main-SNAPSHOT")
-        implementation(project(":sciko-orbital"))
+        api(project(":sciko-orbital"))
       }
     }
   }
-  jvm()
-  jvmToolchain(21)
 }
