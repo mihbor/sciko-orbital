@@ -1,9 +1,7 @@
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
-import kotlin.jvm.java
-
 plugins {
-  kotlin("multiplatform") version "2.0.21"
+  kotlin("multiplatform")
+  id("com.android.library")
+  id("org.jetbrains.kotlin.android") apply false
   id("maven-publish")
 }
 
@@ -12,6 +10,7 @@ version = "0.1-SNAPSHOT"
 
 repositories {
   mavenCentral()
+  google()
   maven {
     name = "GitHubPackages"
     url = uri("https://maven.pkg.github.com/mihbor/sciko-linalg")
@@ -36,6 +35,7 @@ kotlin {
   js(IR) {
     browser()
   }
+  androidTarget()
   sourceSets {
     val commonMain by getting {
       dependencies {
@@ -45,6 +45,18 @@ kotlin {
         api("ltd.mbor.sciko:sciko-analysis:0.1-SNAPSHOT")
       }
     }
+  }
+}
+
+android {
+  compileSdk = 36
+  namespace = "ltd.mbor.sciko.orbital"
+  defaultConfig {
+    minSdk = 21
+  }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
   }
 }
 
@@ -59,8 +71,4 @@ publishing {
       }
     }
   }
-}
-
-rootProject.plugins.withType(YarnPlugin::class.java) {
-  rootProject.the<YarnRootExtension>().yarnLockAutoReplace = true
 }

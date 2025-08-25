@@ -1,9 +1,5 @@
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
-import kotlin.jvm.java
-
 plugins {
-  kotlin("multiplatform") version "2.0.21"
+  kotlin("multiplatform")
   id("maven-publish")
 }
 
@@ -37,8 +33,4 @@ kotlin {
       }
     }
   }
-}
-
-rootProject.plugins.withType(YarnPlugin::class.java) {
-  rootProject.the<YarnRootExtension>().yarnLockAutoReplace = true
 }

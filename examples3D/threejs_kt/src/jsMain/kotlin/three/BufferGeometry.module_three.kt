@@ -7,7 +7,7 @@ import kotlin.js.Json
 
 external interface `T$16` {
     @nativeGetter
-    operator fun get(name: String): dynamic /* BufferAttribute? | InterleavedBufferAttribute? */
+    operator fun get(name: String): Any? /* BufferAttribute? | InterleavedBufferAttribute? */
     @nativeSetter
     operator fun set(name: String, value: BufferAttribute)
     @nativeSetter
