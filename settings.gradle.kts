@@ -6,3 +6,5 @@ rootProject.name = "sciko-orbital"
 include(":sciko-orbital")
 project(":sciko-orbital").projectDir = file("core")
 include(":examples")
+include(":examples3D")
+include(":examples3D:threejs_kt")
