@@ -30,6 +30,9 @@ jobs:
       
     - name: Build project
       run: ./gradlew build
+      env:
+        USERNAME: ${{ github.actor }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Publish to GitHub Packages
       run: ./gradlew publishAllPublicationsToGitHubPackagesRepository
