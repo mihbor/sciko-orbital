@@ -26,8 +26,6 @@ open external class Matrix4 : Matrix {
     override fun transpose(): Matrix4
     open fun setPosition(v: Vector3, y: Number = definedExternally, z: Number = definedExternally): Matrix4
     open fun setPosition(v: Number, y: Number = definedExternally, z: Number = definedExternally): Matrix4
-    open fun getInverse(m: Matrix4): Matrix4
-    override fun getInverse(matrix: Matrix): Matrix
     open fun scale(v: Vector3): Matrix4
     open fun getMaxScaleOnAxis(): Number
     open fun makeTranslation(x: Number, y: Number, z: Number): Matrix4

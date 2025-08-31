@@ -1,25 +1,12 @@
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.jetbrains.kotlinx.multik.api.KEEngineType
-import org.jetbrains.kotlinx.multik.api.mk
-import org.jetbrains.kotlinx.multik.kotlin.KEEngine
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.get
 import org.jetbrains.kotlinx.multik.ndarray.data.slice
 import org.w3c.dom.Window
-import three.js.AxesHelper
-import three.js.BackSide
-import three.js.Color
-import three.js.Mesh
-import three.js.MeshBasicMaterial
-import three.js.PerspectiveCamera
-import three.js.Scene
-import three.js.SphereGeometry
-import three.js.TextureLoader
-import three.js.Vector3
-import three.js.WebGLRenderer
-import three.js.WebGLRendererParameters
-import three.webxr.VRButton
+import three.js.*
+import three.js.examples.controls.OrbitControls
+import three.js.examples.webxr.VRButton
 
 val Window.aspectRatio get() = innerWidth.toDouble() / innerHeight
 
@@ -31,7 +18,7 @@ val renderer = WebGLRenderer((js("{}") as WebGLRendererParameters).apply{
   antialias = false
   logarithmicDepthBuffer = false
 }).apply {
-  document.body?.appendChild( VRButton.createButton(this) )
+  document.body?.appendChild(VRButton.createButton(this))
   document.body?.appendChild(domElement)
   setSize(window.innerWidth, window.innerHeight-4)
   setPixelRatio(window.devicePixelRatio)
@@ -41,7 +28,10 @@ val renderer = WebGLRenderer((js("{}") as WebGLRendererParameters).apply{
 val stars = Mesh(SphereGeometry(1e9, 30, 30), MeshBasicMaterial().apply {
   map = starsTex
   side = BackSide
+  color = Color(0x888888)
+
 })
+val controls = OrbitControls(camera, renderer.domElement)
 val scene = createScene()
 val metrial1 = MeshBasicMaterial().apply {
   color = Color(0xff0000)
@@ -54,9 +44,10 @@ fun createScene() = Scene().apply {
   add(AxesHelper(10.0))
   add(camera.apply {
     position.x = 5
-    position.y = 8
+    position.y = 20
     position.z = 25
   })
+  controls.update()
   twoBody().second.forEach {
     val R1 = it.slice<Double, D1, D1>(0..2)
     val R2 = it.slice<Double, D1, D1>(3..5)

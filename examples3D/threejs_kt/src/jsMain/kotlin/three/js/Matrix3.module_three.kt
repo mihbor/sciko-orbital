@@ -9,7 +9,6 @@ external interface Matrix {
     fun copy(m: Matrix /* this */): Matrix /* this */
     fun multiplyScalar(s: Number): Matrix
     fun determinant(): Number
-    fun getInverse(matrix: Matrix): Matrix
     fun transpose(): Matrix
     fun clone(): Matrix /* this */
 }
@@ -26,7 +25,6 @@ open external class Matrix3 : Matrix {
     override fun multiplyScalar(s: Number): Matrix3
     override fun determinant(): Number
     open fun getInverse(matrix: Matrix3): Matrix3
-    override fun getInverse(matrix: Matrix): Matrix
     override fun transpose(): Matrix3
     open fun getNormalMatrix(matrix4: Matrix4): Matrix3
     open fun transposeIntoArray(r: Array<Number>): Matrix3
