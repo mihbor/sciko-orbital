@@ -6,10 +6,15 @@ import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
+import org.jetbrains.kotlinx.multik.ndarray.data.get
 import org.jetbrains.kotlinx.multik.ndarray.data.slice
 import org.jetbrains.kotlinx.multik.ndarray.operations.div
 import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
+import three.js.Color
+import three.js.Mesh
+import three.js.MeshBasicMaterial
+import three.js.SphereGeometry
 import kotlin.math.pow
 
 @OptIn(ExperimentalStdlibApi::class) // this is needed for eager initialization of multik engines
@@ -26,6 +31,31 @@ fun twoBody(): Pair<List<Double>, List<MultiArray<Double, D1>>> {
   val y0 = R1_0 cat R2_0 cat V1_0 cat V2_0
 
   return rkf45(t0..tf, y0, odeFunction = ::rates)
+}
+
+fun twoBodyScene(): List<Mesh<SphereGeometry, MeshBasicMaterial>> {
+  val metrial1 = MeshBasicMaterial().apply {
+    color = Color(0xff0000)
+  }
+  val metrial2 = MeshBasicMaterial().apply {
+    color = Color(0x00ff00)
+  }
+  return twoBody().second.flatMap {
+    val R1 = it.slice<Double, D1, D1>(0..2)
+    val R2 = it.slice<Double, D1, D1>(3..5)
+    listOf(
+      (Mesh(SphereGeometry(0.02), metrial1).apply {
+        position.x = R1[0]*0.001
+        position.y = R1[1]*0.001
+        position.z = R1[2]*0.001
+      }),
+      (Mesh(SphereGeometry(0.02), metrial2).apply {
+        position.x = R2[0]*0.001
+        position.y = R2[1]*0.001
+        position.z = R2[2]*0.001
+      })
+    )
+  }
 }
 
 private fun rates(t: Double, y: MultiArray<Double, D1>): MultiArray<Double, D1> {

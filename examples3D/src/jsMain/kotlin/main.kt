@@ -1,8 +1,5 @@
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.jetbrains.kotlinx.multik.ndarray.data.D1
-import org.jetbrains.kotlinx.multik.ndarray.data.get
-import org.jetbrains.kotlinx.multik.ndarray.data.slice
 import org.w3c.dom.Window
 import three.js.*
 import three.js.examples.controls.OrbitControls
@@ -33,12 +30,6 @@ val stars = Mesh(SphereGeometry(1e9, 30, 30), MeshBasicMaterial().apply {
 })
 val controls = OrbitControls(camera, renderer.domElement)
 val scene = createScene()
-val metrial1 = MeshBasicMaterial().apply {
-  color = Color(0xff0000)
-}
-val metrial2 = MeshBasicMaterial().apply {
-  color = Color(0x00ff00)
-}
 fun createScene() = Scene().apply {
   add(stars)
   add(AxesHelper(10.0))
@@ -48,22 +39,7 @@ fun createScene() = Scene().apply {
     position.z = 25
   })
   controls.update()
-  twoBody().second.forEach {
-    val R1 = it.slice<Double, D1, D1>(0..2)
-    val R2 = it.slice<Double, D1, D1>(3..5)
-    val V1 = it.slice<Double, D1, D1>(6..8)
-    val V2 = it.slice<Double, D1, D1>(9..11)
-    add(Mesh(SphereGeometry(0.02), metrial1).apply {
-      position.x = R1[0]*0.001
-      position.y = R1[1]*0.001
-      position.z = R1[2]*0.001
-    })
-    add(Mesh(SphereGeometry(0.02), metrial2).apply {
-      position.x = R2[0]*0.001
-      position.y = R2[1]*0.001
-      position.z = R2[2]*0.001
-    })
-  }
+  add(*orbitScene().toTypedArray())
 }
 
 fun animate() {
