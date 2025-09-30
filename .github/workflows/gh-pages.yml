@@ -32,6 +32,9 @@ jobs:
 
       - name: Build JS browser distribution (examples3D)
         run: ./gradlew :examples3D:jsBrowserDistribution
+        env:
+          USERNAME: ${{ github.actor }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
