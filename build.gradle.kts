@@ -1,6 +1,6 @@
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
-import kotlin.jvm.java
 
 plugins {
   kotlin("multiplatform") apply false
@@ -8,8 +8,11 @@ plugins {
   id("org.jetbrains.kotlin.android") version "2.2.10" apply false
 }
 
-subprojects {
-  plugins.withType(YarnPlugin::class.java) {
-    rootProject.the<YarnRootExtension>().yarnLockAutoReplace = true
+plugins.withType<YarnPlugin> {
+  the<YarnRootExtension>().apply {
+    // Automatically refresh yarn.lock if the Kotlin/JS plugin detects a mismatch
+    yarnLockAutoReplace = true
+    // Do not fail the build on mismatches; let it update and continue
+    yarnLockMismatchReport = YarnLockMismatchReport.WARNING
   }
 }

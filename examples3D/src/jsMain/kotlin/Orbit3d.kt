@@ -11,12 +11,11 @@ import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
 import org.jetbrains.kotlinx.multik.ndarray.data.slice
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
-import org.jetbrains.kotlinx.multik.ndarray.operations.toList
 import three.js.*
 import kotlin.math.PI
 import kotlin.math.pow
 
-val hours = 3600.0
+const val hours = 3600.0
 
 fun aJ2(mu: Double, r: MultiArray<Double, D1>): MultiArray<Double, D1> {
   val (x, y, z) = listOf(r[0], r[1], r[2])
@@ -50,7 +49,6 @@ fun orbitScene(): List<Object3D> {
     rotateX(-PI/2)
     y.drop(1).forEach {
       val R1 = it.slice<Double, D1, D1>(0..2)
-      console.log(R1.toList())
       add(Mesh(SphereGeometry(0.1), metrial).apply {
         position.x = R1[0]*0.001
         position.y = R1[1]*0.001

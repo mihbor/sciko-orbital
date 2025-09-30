@@ -30,6 +30,7 @@ kotlin {
         implementation("org.jetbrains.kotlinx:multik-core-js:0.2.3")
         implementation("org.jetbrains.kotlinx:multik-kotlin-js:0.2.3")
         api(project("threejs_kt"))
+        api(project("three-mesh-ui_kt"))
       }
     }
   }

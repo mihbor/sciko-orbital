@@ -15,7 +15,7 @@ import org.jetbrains.kotlinx.multik.ndarray.data.slice
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.pow
 
-val hours = 3600
+const val hours = 3600.0
 
 fun aJ2(mu: Double, r: MultiArray<Double, D1>): MultiArray<Double, D1> {
   val (x, y, z) = listOf(r[0], r[1], r[2])
@@ -27,13 +27,13 @@ fun aJ2(mu: Double, r: MultiArray<Double, D1>): MultiArray<Double, D1> {
 }
 
 private val t0 = 0.0
-private val tf = 4848.0
-private val r0 = mk.ndarray(mk[-6685.20926,601.51244,3346.06634])
-private val v0 = mk.ndarray(mk[-1.74294,-6.70242,-2.27739])
+private val tf = 4 * hours
+private val r0 = mk.ndarray(mk[8000.0, 0.0, 6000.0])
+private val v0 = mk.ndarray(mk[0.0, 7.0, 0.0])
 
 fun main() {
   val y0 = r0 cat v0
-  val (t, y) = rkf45(t0..tf, y0) { t, y -> rates(t, y, aJ2(muEarth, y.slice(0..2))) }
+  val (t, y) = rkf45(t0..tf, y0) { t, y -> rates(t, y,/* aJ2(muEarth, y.slice(0..2))*/) }
 
   output(t, y)
 }
@@ -81,29 +81,8 @@ private fun output(t: List<Double>, y: List<MultiArray<Double, D1>>) {
   printf("\n The speed at that point is %g km/s\n", v_at_rmax)
   printf("\n--------------------------------------------------------\n\n")
 
-  // TODO: 3d plotting
 }
 
 private fun printf(format: String, vararg args: Any?) {
   System.out.printf(format, *args)
 }
-
-//The final position is [-3419.32, -7146.16, -3758.41] (km).
-//Magnitude = 8768.41 km
-//
-//The final velocity is [5.57968, -0.911545, -3.00336] (km/s).
-//Magnitude = 6.40186 km/s
-
-// J2 1:
-//The final position is [1729.62, 6889.32, 2384.98] (km).
-//Magnitude = 7492.83 km
-//
-//The final velocity is [-6.52049, 0.525827, 3.22664] (km/s).
-//Magnitude = 7.29414 km/s
-
-//J2 2:
-//The final position is [1737.45, 6881.70, 2372.62] (km).
-//Magnitude = 7483.71 km
-//
-//The final velocity is [-6.52597, 0.536321, 3.23769] (km/s).
-//Magnitude = 7.30469 km/s

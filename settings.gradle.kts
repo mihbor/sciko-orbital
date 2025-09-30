@@ -5,6 +5,7 @@ project(":sciko-orbital").projectDir = file("core")
 include(":examples")
 include(":examples3D")
 include(":examples3D:threejs_kt")
+include(":examples3D:three-mesh-ui_kt")
 
 pluginManagement {
   repositories {
