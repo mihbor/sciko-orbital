@@ -18,7 +18,6 @@ val uiProps = BlockProps().apply {
   fontFamily = "fonts/Roboto-msdf.json"
   fontTexture = "fonts/Roboto-msdf.png"
 }
-fun Double.format(digits: Int): String = this.asDynamic().toFixed(digits)
 
 fun createControls() = Block(uiProps).apply {
   add(Block(BlockProps().apply {

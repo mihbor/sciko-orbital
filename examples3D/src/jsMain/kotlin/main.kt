@@ -33,8 +33,8 @@ val stars = Mesh(SphereGeometry(1e9, 30, 30), MeshBasicMaterial().apply {
   map = starsTex
   side = BackSide
   color = Color(0x888888)
-
 })
+val earthTex = texLoader.load("1_earth_8k.jpg")
 val controls = OrbitControls(camera, renderer.domElement)
 val raycaster = Raycaster().apply {
   far = 2e8

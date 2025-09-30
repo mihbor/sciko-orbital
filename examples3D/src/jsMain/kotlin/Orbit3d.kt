@@ -38,7 +38,7 @@ fun orbitScene(): List<Object3D> {
   output(t, y)
 
   val planetMaterial = MeshBasicMaterial().apply {
-    color = Color(0x666666)
+    map = earthTex
   }
   val metrial = MeshBasicMaterial().apply {
     color = Color(0xffffff)
