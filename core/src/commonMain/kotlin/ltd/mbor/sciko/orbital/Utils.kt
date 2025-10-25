@@ -14,6 +14,7 @@ const val muSun = 1.32712440018e11
 
 const val rMoon = 1737.0
 const val mMoon = 7348e19
+const val saMoon = 384748.0 // = semimajor axis
 
 val Number.degrees get() = this.toDouble() * PI/180
 fun Number.toDegrees() = this.toDouble()*180/PI

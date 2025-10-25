@@ -1,11 +1,12 @@
 package ltd.mbor.sciko.orbital.examples
 
+import ltd.mbor.sciko.orbital.degrees
 import ltd.mbor.sciko.orbital.mEarth
 import ltd.mbor.sciko.orbital.mMoon
-import ltd.mbor.sciko.orbital.muEarth
 import ltd.mbor.sciko.orbital.rEarth
 import ltd.mbor.sciko.orbital.rMoon
 import ltd.mbor.sciko.orbital.rkf45
+import ltd.mbor.sciko.orbital.toDegrees
 import org.jetbrains.kotlinx.kandy.dsl.continuous
 import org.jetbrains.kotlinx.kandy.dsl.plot
 import org.jetbrains.kotlinx.kandy.letsplot.export.save
@@ -39,20 +40,20 @@ private val x1 = -pi_2 * r12
 private val x2 = pi_1 * r12
 
 private val d0 = 200.0
-private val phi = -90.0
+private val phi = -90.0.degrees
 private val v0 = 10.9148
-private val gamma = 20.0
+private val gamma = 20.0.degrees
 private val t0 = 0.0
 private val tf = 3.16689 * days
 private val r0 = rEarth + d0
-private val x = r0 * cos(Math.toRadians(phi)) + x1
-private val y = r0 * sin(Math.toRadians(phi))
+private val x = r0 * cos(phi) + x1
+private val y = r0 * sin(phi)
 
 fun main() {
   mk.setEngine(KEEngineType)
 
-  val vx = v0 * (sin(Math.toRadians(gamma)) * cos(Math.toRadians(phi)) - cos(Math.toRadians(gamma)) * sin(Math.toRadians(phi)))
-  val vy = v0 * (sin(Math.toRadians(gamma)) * sin(Math.toRadians(phi)) + cos(Math.toRadians(gamma)) * cos(Math.toRadians(phi)))
+  val vx = v0 * (sin(gamma) * cos(phi) - cos(gamma) * sin(phi))
+  val vy = v0 * (sin(gamma) * sin(phi) + cos(gamma) * cos(phi))
   val f0 = mk.ndarray(mk[x, y, vx, vy])
 
   val (t, f) = rkf45(t0..tf, f0, odeFunction = ::rates)
@@ -88,8 +89,8 @@ private fun output(d0: Double, phi: Double, gamma: Double, tf: Double, df: Doubl
   println("\n three body equations.\n")
   println("\n Initial Earth altitude (km)         = $d0")
   println("\n Initial angle between radial")
-  println("\n   and earth-moon line (degrees)     = $phi")
-  println("\n Initial flight path angle (degrees) = $gamma")
+  println("\n   and earth-moon line (degrees)     = ${phi.toDegrees()}")
+  println("\n Initial flight path angle (degrees) = ${gamma.toDegrees()}")
   println("\n Flight time (days)                  = ${tf / days}")
   println("\n Final distance from the moon (km)   = $df")
   println("\n Final relative speed (km/s)         = $vf")

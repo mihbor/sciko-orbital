@@ -2,6 +2,7 @@ import ltd.mbor.sciko.linalg.norm
 import ltd.mbor.sciko.orbital.J2
 import ltd.mbor.sciko.orbital.muEarth
 import ltd.mbor.sciko.orbital.rEarth
+import ltd.mbor.sciko.orbital.rMoon
 import ltd.mbor.sciko.orbital.rkf45
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
@@ -37,14 +38,14 @@ fun orbitScene(): List<Object3D> {
 
   output(t, y)
 
-  val planetMaterial = MeshBasicMaterial().apply {
+  val earthMaterial = MeshBasicMaterial().apply {
     map = earthTex
   }
   val metrial = MeshBasicMaterial().apply {
     color = Color(0xffffff)
   }
   return listOf<Object3D>(
-    Mesh(SphereGeometry(6), planetMaterial)
+    Mesh(SphereGeometry(rMoon *0.001), earthMaterial),
   ) + Object3D().apply{
     rotateX(-PI/2)
     y.drop(1).forEach {
