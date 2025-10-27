@@ -32,6 +32,7 @@ fun createControls() = Block(uiProps).apply {
   add(createButton("2 body", ::twoBodyScene))
   add(createButton("orbit", ::orbitScene))
   add(createButton("lunar", ::lunarTrajectoryScene))
+  add(createButton("relative", ::relativeOrbitScene))
 }
 
 val buttonOptions = BlockProps().apply {
