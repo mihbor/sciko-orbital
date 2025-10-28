@@ -12,6 +12,7 @@ const val J2 = 1082.63e-6
 
 const val muSun = 1.32712440018e11
 
+const val muMoon = 4902.8 // km^3/s^2
 const val rMoon = 1737.0
 const val mMoon = 7348e19
 const val saMoon = 384748.0 // = semimajor axis

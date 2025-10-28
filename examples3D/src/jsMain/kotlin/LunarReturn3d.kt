@@ -7,6 +7,7 @@ import ltd.mbor.sciko.orbital.rMoon
 import ltd.mbor.sciko.orbital.rkf45
 import ltd.mbor.sciko.orbital.simpsonsLunarEphemeris
 import ltd.mbor.sciko.orbital.degrees
+import ltd.mbor.sciko.orbital.muMoon
 import org.jetbrains.kotlinx.multik.api.KEEngineType
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
@@ -20,13 +21,11 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import three.js.*
 import kotlin.math.PI
 import kotlin.math.cos
+import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-// Kotlin/JS port of MATLAB Example_9_03.m with 3D visualization similar to LunarTrajectory3d.kt
-
 private const val days = 24 * 3600.0
-private const val muMoon = 4902.8 // km^3/s^2 (close to MATLAB value)
 
 private fun juliandate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int): Double {
   // JD at 0h UT + fraction of day
@@ -94,7 +93,6 @@ fun lunarReturnScene(): List<Object3D> {
   // Post-process for visualization: perilune detection and moon path sampling
   var distMin = Double.POSITIVE_INFINITY
 
-  // We'll also collect Moon positions for rendering (sparse sampling for perf)
   var moonSample: MultiArray<Double, D1>? = null
 
   yOut.forEachIndexed { i, state ->
@@ -105,13 +103,9 @@ fun lunarReturnScene(): List<Object3D> {
     if (d < distMin) { distMin = d; moonSample = rm }
   }
 
-  // Three.js visualization similar to LunarTrajectory3d.kt
   val earthMaterial = MeshBasicMaterial().apply { map = earthTex }
   val moonMaterial = MeshBasicMaterial().apply { map = moonTex }
   val trajMaterial = MeshBasicMaterial().apply { color = Color(0xffffff) }
-  val startMaterial = MeshBasicMaterial().apply { color = Color(0x00ff00) }
-  val periluneMaterial = MeshBasicMaterial().apply { color = Color(0xff0000) }
-  val endMaterial = MeshBasicMaterial().apply { color = Color(0x0000ff) }
 
   val scale = 0.0001
 
@@ -149,21 +143,9 @@ fun lunarReturnScene(): List<Object3D> {
   }
   objects += trajGroup
 
-  // Markers: start, perilune, end
-//  fun addMarker(state: MultiArray<Double, D1>, material: MeshBasicMaterial, size: Double = 0.2) = Mesh(SphereGeometry(size), material).apply {
-//    position.x = state[0] * scale
-//    position.y = state[1] * scale
-//    position.z = state[2] * scale
-//  }
-
-//  objects += Object3D().apply { rotateX(-PI/2); add(addMarker(yOut.first(), startMaterial)) }
-//  objects += Object3D().apply { rotateX(-PI/2); add(addMarker(yOut[imin], periluneMaterial, size = 0.15)) }
-//  objects += Object3D().apply { rotateX(-PI/2); add(addMarker(yOut.last(), endMaterial)) }
-
-  // Console output (brief)
-  println("Example 9.03 (3D Earth-Moon restricted) — Kotlin/JS")
+  println("Example 9.03 (3D Earth-Moon restricted)")
   println("Flight time days = "+ (tf / days))
-  println("Perilune distance (km) ≈ "+ distMin)
+  println("Perilune distance (km) ~= "+ distMin)
 
   return objects
 }
@@ -182,9 +164,9 @@ private fun rates(t: Double, y: MultiArray<Double, D1>, jd0: Double, ttt: Double
   val rmsMag = rms.norm()
   val rmMag = rm.norm()
 
-  val aEarth = -muEarth * r / (rmag*rmag*rmag)
+  val aEarth = -muEarth * r / rmag.pow(3)
 
-  val aMoon = muMoon * (rms / (rmsMag*rmsMag*rmsMag) - rm / (rmMag*rmMag*rmMag))
+  val aMoon = muMoon * (rms / rmsMag.pow(3) - rm / rmMag.pow(3))
 
   val aX = aEarth[0] + aMoon[0]
   val aY = aEarth[1] + aMoon[1]

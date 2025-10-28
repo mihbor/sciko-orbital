@@ -12,7 +12,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 fun simpsonsLunarEphemeris(jd: Double): Pair<MultiArray<Double, D1>, MultiArray<Double, D1>> {
-  val tfac = 36525*3600*24
+  val tfac = 36525L*3600*24
   val t = (jd - 2451545.0)/36525
 
   val a = mk.ndarray(mk[
