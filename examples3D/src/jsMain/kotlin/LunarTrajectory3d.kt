@@ -49,6 +49,7 @@ private val y = r0 * sin(phi)
 
 fun lunarTrajectoryScene(): List<Object3D> {
   mk.setEngine(KEEngineType)
+  val scale = 0.0001
 
   val vx = v0 * (sin(gamma) * cos(phi) - cos(gamma) * sin(phi))
   val vy = v0 * (sin(gamma) * sin(phi) + cos(gamma) * cos(phi))
@@ -75,20 +76,20 @@ fun lunarTrajectoryScene(): List<Object3D> {
     color = Color(0xffffff)
   }
   return listOf<Object3D>(
-    Mesh(SphereGeometry(rEarth*0.0001), earthMaterial).apply {
-      position.x = x1 * 0.0001
+    Mesh(SphereGeometry(rEarth*scale), earthMaterial).apply {
+      position.x = x1 * scale
     },
   ) + Object3D().apply{
     rotateX(-PI/2)
-    add(Mesh(SphereGeometry(rMoon*0.0001), moonMaterial).apply {
-      position.x = x2 * 0.0001
+    add(Mesh(SphereGeometry(rMoon*scale), moonMaterial).apply {
+      position.x = x2 * scale
     })
     f.drop(1).forEach {
       val x = it[0]
       val y = it[1]
-      add(Mesh(SphereGeometry(0.1), metrial).apply {
-        position.x = x*0.0001
-        position.y = y*0.0001
+      add(Mesh(SphereGeometry(0.05), metrial).apply {
+        position.x = x*scale
+        position.y = y*scale
       })
     }
   }

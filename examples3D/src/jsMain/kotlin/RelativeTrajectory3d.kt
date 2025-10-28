@@ -12,6 +12,7 @@ import kotlin.math.sqrt
 
 fun relativeOrbitScene(): List<Object3D> {
   mk.setEngine(KEEngineType)
+  val scale = 0.001
   val mu = muEarth
 
   // Input data: Spacecraft A
@@ -65,9 +66,9 @@ fun relativeOrbitScene(): List<Object3D> {
 
   relPositions.forEachIndexed { idx, r ->
     val m = Mesh(SphereGeometry(0.02), material).apply {
-      position.x = r[0] * 0.001
-      position.y = r[1] * 0.001
-      position.z = r[2] * 0.001
+      position.x = r[0] * scale
+      position.y = r[1] * scale
+      position.z = r[2] * scale
     }
     meshes += m
   }
@@ -75,15 +76,15 @@ fun relativeOrbitScene(): List<Object3D> {
   // initial B position marker
   val (rRel0, _, _) = rvaRelative(rA0, vA0, rB0, vB0, mu)
   meshes += Mesh(SphereGeometry(0.06), initialMaterial).apply {
-    position.x = rRel0[0] * 0.001
-    position.y = rRel0[1] * 0.001
-    position.z = rRel0[2] * 0.001
+    position.x = rRel0[0] * scale
+    position.y = rRel0[1] * scale
+    position.z = rRel0[2] * scale
   }
 
   // draw simple axes in the co-moving frame (as small spheres along axes)
-  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.x = 4.0 * 1000.0 * 0.001 }
-  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.y = 7.0 * 1000.0 * 0.001 }
-  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.z = 4.0 * 1000.0 * 0.001 }
+  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.x = 4.0 * 1000.0 * scale }
+  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.y = 7.0 * 1000.0 * scale }
+  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.z = 4.0 * 1000.0 * scale }
 
   return listOf(Object3D().apply {
     rotateX(-PI / 2)
