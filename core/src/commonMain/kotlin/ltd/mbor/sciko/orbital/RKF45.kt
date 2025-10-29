@@ -26,11 +26,25 @@ private val b = mk.ndarray(mk[
 private val c4 = mk.ndarray(mk[25.0 / 216, 0.0,  1408.0 / 2565,   2197.0 / 4104,  -1.0 / 5,      0.0])
 private val c5 = mk.ndarray(mk[16.0 / 135, 0.0, 6656.0 / 12825, 28561.0 / 56430, -9.0 / 50, 2.0 / 55])
 
+fun interface TerminateFunction {
+  /**
+   * Evaluates the termination condition for a numerical integration or iterative process.
+   *
+   * @param t The current time or independent variable value.
+   * @param y The current state vector represented as a one-dimensional multi-array of doubles.
+   * @param yInc The increment vector represented as a one-dimensional multi-array of doubles, indicating the change in state.
+   * @return True if the termination condition is met, otherwise false.
+   */
+  fun invoke(t: Double, y: MultiArray<Double, D1>, yInc: MultiArray<Double, D1>): Boolean
+}
+
 fun rkf45(
   tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   tolerance: Double = 1e-8,
+  initialStep: Double = (tspan.endInclusive - tspan.start)/100,
   outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
+  terminateFunction: TerminateFunction? = null,
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
 ): Pair<List<Double>, List<MultiArray<Double, D1>>> {
 
@@ -40,7 +54,7 @@ fun rkf45(
   var y = y0
   val tOut = mutableListOf(t)
   val yOut = mutableListOf(y)
-  var h = (tf - t0) / 100
+  var h = initialStep
 
   while (t < tf) {
     val hmin = 16 * Double.MIN_VALUE
@@ -66,9 +80,13 @@ fun rkf45(
     if (teMax <= teAllowed) {
       h = min(h, tf - t)
       t += h
-      y += h * (f.transpose() dot c5)
+      val yInc = h * (f.transpose() dot c5)
+      y += yInc
       tOut.add(t)
       yOut.add(y)
+      if (terminateFunction?.invoke(t, y, yInc) == true) {
+        return Pair(tOut, yOut)
+      }
     }
 
     h = min(delta * h, 4 * h)
