@@ -14,6 +14,8 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
 
+private const val EPS = 2.2204e-16
+
 private val a = mk.ndarray(mk[0.0, 1.0 / 4, 3.0 / 8, 12.0 / 13, 1.0, 1.0 / 2])
 private val b = mk.ndarray(mk[
   mk[          0.0,            0.0,            0.0,           0.0,        0.0],
@@ -42,7 +44,7 @@ fun rkf45(
   tspan: ClosedRange<Double>,
   y0: MultiArray<Double, D1>,
   tolerance: Double = 1e-8,
-  initialStep: Double = (tspan.endInclusive - tspan.start)/100,
+  h0: Double = (tspan.endInclusive - tspan.start)/100,
   outerFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1> = { _, y -> y },
   terminateFunction: TerminateFunction? = null,
   odeFunction: (Double, MultiArray<Double, D1>) -> MultiArray<Double, D1>,
@@ -54,7 +56,7 @@ fun rkf45(
   var y = y0
   val tOut = mutableListOf(t)
   val yOut = mutableListOf(y)
-  var h = initialStep
+  var h = h0
 
   while (t < tf) {
     val hmin = 16 * Double.MIN_VALUE
@@ -75,7 +77,7 @@ fun rkf45(
     val teMax = te.map { abs(it) }.max()!!
     val ymax = y.map { abs(it) }.max()!!
     val teAllowed = tolerance * max(ymax, 1.0)
-    val delta = (teAllowed / (teMax + Double.MIN_VALUE)).pow(1.0 / 5)
+    val delta = (teAllowed / (teMax + EPS)).pow(0.2)
 
     if (teMax <= teAllowed) {
       h = min(h, tf - t)

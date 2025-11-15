@@ -8,12 +8,7 @@ import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Kotlin port of MATLAB Example_10_6.m
@@ -58,7 +53,7 @@ fun main() {
     t0..tf,
     y0,
     tolerance = 1e-12,
-    initialStep = T0 / 1000.0,
+    h0 = T0 / 1000.0,
     odeFunction = { t, y -> ratesGaussJ2(t, y, mu, RE, J2c) }
   )
 

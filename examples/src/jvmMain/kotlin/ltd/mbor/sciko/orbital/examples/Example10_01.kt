@@ -79,7 +79,7 @@ fun main() {
     t0..tf,
     y0,
     tolerance = tolerance,
-    initialStep = initialStep,
+    h0 = initialStep,
     terminateFunction = terminate,
   ) { t, y -> rates(t, y, mu, RE, wE, CD, m, A) }
 

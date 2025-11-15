@@ -86,7 +86,7 @@ fun main() {
       t0s..t,
       dy0,
       tolerance = 1e-15,
-      initialStep = delT / 10.0,
+      h0 = delT / 10.0,
     ) { ti, f -> ratesEnckeJ2(ti, f, R0s, V0s, t0s, mu, RE, J2c) }
 
     val z = yOut.last()
