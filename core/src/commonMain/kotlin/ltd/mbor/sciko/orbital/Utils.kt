@@ -34,3 +34,6 @@ fun ComplexDouble.pow(x: Double): ComplexDouble {
 }
 
 fun sqrt(x: ComplexDouble) = x.pow(0.5)
+
+fun sind(x: Double) = sin(x.degrees)
+fun cosd(x: Double) = cos(x.degrees)
