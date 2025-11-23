@@ -1,11 +1,4 @@
-import ltd.mbor.sciko.orbital.degrees
-import ltd.mbor.sciko.orbital.mEarth
-import ltd.mbor.sciko.orbital.mMoon
-import ltd.mbor.sciko.orbital.rEarth
-import ltd.mbor.sciko.orbital.rMoon
-import ltd.mbor.sciko.orbital.rkf45
-import ltd.mbor.sciko.orbital.saMoon
-import ltd.mbor.sciko.orbital.toDegrees
+import ltd.mbor.sciko.orbital.*
 import org.jetbrains.kotlinx.multik.api.KEEngineType
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
@@ -13,11 +6,7 @@ import org.jetbrains.kotlinx.multik.ndarray.data.D1
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.data.get
 import three.js.*
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 
 private const val days = 24 * 3600
@@ -113,7 +102,6 @@ private fun rates(t: Double, f: MultiArray<Double, D1>): MultiArray<Double, D1> 
 private fun printf(format: String, vararg args: Any?) {
   console.log(format, *args)
 }
-
 
 private fun output(d0: Double, phi: Double, gamma: Double, tf: Double, df: Double, vf: Double, f: List<MultiArray<Double, D1>>) {
   println("------------------------------------------------------------")

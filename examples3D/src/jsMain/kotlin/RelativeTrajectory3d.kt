@@ -82,9 +82,9 @@ fun relativeOrbitScene(): List<Object3D> {
   }
 
   // draw simple axes in the co-moving frame (as small spheres along axes)
-  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.x = 4.0 * 1000.0 * scale }
-  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.y = 7.0 * 1000.0 * scale }
-  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.z = 4.0 * 1000.0 * scale }
+//  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.x = 4.0 * 1000.0 * scale }
+//  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.y = 7.0 * 1000.0 * scale }
+//  meshes += Mesh(SphereGeometry(0.03), axisMaterial).apply { position.z = 4.0 * 1000.0 * scale }
 
   return listOf(Object3D().apply {
     rotateX(-PI / 2)
