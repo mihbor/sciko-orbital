@@ -21,13 +21,9 @@ fun rvaRelative(
   // Calculate the vector hA
   val hA = rA cross vA
 
-  // Calculate the unit vectors i, j, and k
-  val i = rA/rA.norm()
-  val k = hA/hA.norm()
-  val j = k cross i
-
-  // Calculate the transformation matrix Qxx
-  val QXx = i.cat(j).cat(k).reshape(3, 3)
+  // QXx maps ECI components into the RIC frame. Keep this convention shared
+  // with ricToEciRotation, whose columns map RIC components into ECI.
+  val QXx = ricToEciRotation(rA.cat(vA)).transpose()
 
   // Calculate Omega and Omega_dot
   val Omega = hA/rA.norm().pow(2.0)
