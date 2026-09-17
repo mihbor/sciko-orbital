@@ -6,6 +6,7 @@ import kotlin.math.*
 const val G = 6.6742e-20
 const val muEarth = 398600.0 // km^3/s^2
 const val rEarth = 6378.0 //km
+const val omegaEarth = 2.0 * PI / 86400.0 // rad/s
 const val mEarth = 5974e21
 
 const val J2 = 1082.63e-6
