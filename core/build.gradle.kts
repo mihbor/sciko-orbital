@@ -47,6 +47,11 @@ kotlin {
         api("ltd.mbor.sciko:sciko-analysis:0.1-SNAPSHOT")
       }
     }
+    val commonTest by getting {
+      dependencies {
+        implementation(kotlin("test"))
+      }
+    }
   }
 }
 
