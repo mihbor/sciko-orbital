@@ -59,6 +59,9 @@ fun rkf45(
   var h = h0
 
   while (t < tf) {
+    // The stages must be evaluated with the step that will actually be
+    // applied. In particular, cap the last step before evaluating them.
+    h = min(h, tf - t)
     val hmin = 16 * Double.MIN_VALUE
     val ti = t
     val yi = outerFunction(t, y)
@@ -73,16 +76,18 @@ fun rkf45(
       f[i] = odeFunction(tInner, yInner)
     }
 
-    val te = h * (f.transpose() dot (c4 - c5))
+    // Multik's JVM dot implementation expects contiguous arrays. transpose()
+    // returns a strided view, so materialize it before the matrix-vector dots.
+    val transposed = f.transpose().deepCopy()
+    val te = h * (transposed dot (c4 - c5))
     val teMax = te.map { abs(it) }.max()!!
     val ymax = y.map { abs(it) }.max()!!
     val teAllowed = tolerance * max(ymax, 1.0)
     val delta = (teAllowed / (teMax + EPS)).pow(0.2)
 
     if (teMax <= teAllowed) {
-      h = min(h, tf - t)
       t += h
-      val yInc = h * (f.transpose() dot c5)
+      val yInc = h * (transposed dot c5)
       y += yInc
       tOut.add(t)
       yOut.add(y)
